@@ -148,8 +148,9 @@ _Add UML diagrams here or link images from the repository._
 |----|------------|----------|--------|
 
 ### Product Backlog – Project Part 2
-| ID | User Story | Priority | Status |
-|----|------------|----------|--------|
+| ID | User Story | Story Point | Risk | Halfway Release |
+|----|------------|-------------|------|-----------------|
+|01|As a student, I want to register for an account using my university credentials so that I can request counseling sessions|2|High|Yes|
 
 ### Product Backlog – Project Part 3
 | ID | User Story | Priority | Status |
