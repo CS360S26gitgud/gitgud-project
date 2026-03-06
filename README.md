@@ -144,8 +144,7 @@ _Add UML diagrams here or link images from the repository._
 ## Product Backlog
 
 ### Product Backlog – Project Part 1
-| ID | User Story | Priority | Status |
-|----|------------|----------|--------|
+Project Part 1 did not include making a backlog
 
 ### Product Backlog – Project Part 2
 | ID | User Story | Story Point | Risk | Halfway Release |
