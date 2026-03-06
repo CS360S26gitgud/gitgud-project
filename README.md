@@ -151,6 +151,16 @@ _Add UML diagrams here or link images from the repository._
 | ID | User Story | Story Point | Risk | Halfway Release |
 |----|------------|-------------|------|-----------------|
 |01|As a student, I want to register for an account using my university credentials so that I can request counseling sessions|2|High|Yes|
+|02|As a student, I want to log in securely so that my personal information (like appointment data) is protected|1|High|Yes|
+|03|As a student, I want to view available counseling slots so that I can choose a suitable time|1|Low|Yes|
+|04|As a student, I want to book a counseling appointment so that I can receive guidance and/or support|3|Low|Yes|
+|05|As a student, I want to cancel or reschedule an appointment so that I can manage the conflicts in my schedule|5|Medium|No|
+|06|As a student, I want to be able to review and rate my counseling session anonymously so that I can provide feedback about the counselor|3|Medium|No|
+|07|As a student, I want to be able to view the reviews of a counselor so that I can ascertain the best of my options|5|Low|No|
+|08|As a student, I want to receive appointment notifications so that I don’t miss my session|5|Medium|No|
+|09|As a student, I want to be able to passively keep track of appointments using a calendar|5|Low|No|
+|10|As a student, I want to be able to search/filter through the available list of counselors by their specializations or availability, so I can find the most suitable person|2|Low|Yes|
+|11|As a student, I want to view my appointment history so that I can keep track of past sessions|2|Low|Yes|
 
 ### Product Backlog – Project Part 3
 | ID | User Story | Priority | Status |
