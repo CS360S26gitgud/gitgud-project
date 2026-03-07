@@ -160,6 +160,16 @@ Project Part 1 did not include making a backlog
 |09|As a student, I want to be able to passively keep track of appointments using a calendar|5|Low|No|
 |10|As a student, I want to be able to search/filter through the available list of counselors by their specializations or availability, so I can find the most suitable person|2|Low|Yes|
 |11|As a student, I want to view my appointment history so that I can keep track of past sessions|2|Low|Yes|
+|12|As a counselor, I want to log in so that I can manage my appointments|1|High|Yes|
+|13|As a counselor, I want to set/update my availability so that students can book sessions|2|Medium|Yes|
+|14|As a counselor, I want to view my upcoming appointments so that I can prepare in advance|2|Low|Yes|
+|15|As a counselor, I want to view the students’ feedback and their ratings so I can improve my shortcomings|2|Low|No|
+|16|As a counselor, I want to cancel or reschedule appointments if necessary so that students can be notified|5|Medium|No|
+|17|As a counselor, I want to have the option of being able to list relevant material for an appointment|13|High|No|
+|18|As an admin, I want to create, update, or deactivate student accounts so that I can ensure organization|8|High|No|
+|19|As an admin, I want to manage counselor profiles and their permissions so that only authorized counselors can book|8|High|No|
+|20|As an admin, I want to stop a counselor from taking appointments if their reviews fall below a threshold|8|Medium|No|
+|21|As an admin, I want to monitor system activity so I can ensure proper functioning|13| High|No|
 
 ### Product Backlog – Project Part 3
 | ID | User Story | Priority | Status |
