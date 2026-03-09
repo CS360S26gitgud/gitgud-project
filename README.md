@@ -36,18 +36,15 @@
 
 ## Meeting Minutes
 
-### Meeting – Feb 22, 2026
+### Meeting – March 6, 2026
 
-#### Date
-Sunday, February 22, 2026
 
 #### Attendance
-- Anmol  
-- Amir  
-- Michael  
-- Jehanzeb  
-- Tharidu  
-- Dillon  
+- Umer Mahmood Shafi  
+- Muhammad Haris  
+- Tayab Javaid  
+- M. Moosa Kashif 
+- Affan Khalid
 
 ---
 
