@@ -7,7 +7,7 @@
   - [Meeting – Feb 22, 2026](#meeting--feb-22-2026)
   - [Meeting – TBD](#meeting--tbd)
 
-- [UML Diagrams](#uml-diagrams)
+- [Object-Oriented Analysis — CRC Cards](#uml-diagrams)
 
 - [Product Backlog](#product-backlog)
   - [Product Backlog – Project Part 1](#product-backlog--project-part-1)
