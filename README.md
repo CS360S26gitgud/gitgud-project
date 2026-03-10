@@ -133,8 +133,13 @@ _Content to be added._
 
 ---
 
-## UML Diagrams
-_Add UML diagrams here or link images from the repository._
+## Object-Oriented Analysis — CRC Cards
+
+![CRC Cards](doc/images/crc_Services.png)
+![CRC Cards](doc/images/crc_Entities.png)
+
+
+
 
 ---
 
