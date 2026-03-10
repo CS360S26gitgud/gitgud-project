@@ -17,6 +17,12 @@
 - [Wireframes](#wireframes)
   - [Wireframes – Project Part 1](#wireframes--project-part-1)
   - [Wireframes – Project Part 2](#wireframes--project-part-2)
+  - ![WhatsApp Image 2026-03-10 at 16 12 15](https://github.com/user-attachments/assets/117550ac-ae60-433b-8221-807cd4b56803)
+    ![WhatsApp Image 2026-03-10 at 16 12 15 (1)](https://github.com/user-attachments/assets/00f7455d-93f9-4103-8200-716dc53c2618)
+
+    Figma Link:
+    https://www.figma.com/design/lBmBmam8cPsedxzZHFOvHT/Untitled?node-id=0-1&p=f&t=SAgsLNbDGJ4jE8N8-0
+
   - [Wireframes – Project Part 3](#wireframes--project-part-3)
 
 ---
