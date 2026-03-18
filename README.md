@@ -4,7 +4,7 @@
 - [Team Information](#team-information)
 
 - [Meeting Minutes](#meeting-minutes)
-  - [Meeting – Feb 22, 2026](#meeting--feb-22-2026)
+  - [Meeting – March 6, 2026](#meeting--march-6-2026)
   - [Meeting – TBD](#meeting--tbd)
 
 - [Object-Oriented Analysis — CRC Cards](#uml-diagrams)
