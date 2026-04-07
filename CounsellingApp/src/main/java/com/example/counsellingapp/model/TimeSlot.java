@@ -14,6 +14,9 @@ public class TimeSlot {
     private String endTime;//format: "HH:mm"
     private boolean booked;
 
+    @com.google.firebase.firestore.Exclude
+    private String counselorName;
+
     public TimeSlot() {}//empty constructor for Firestore deserialization
 
     public TimeSlot(String id, String counselorId, String date, String startTime, String endTime) {
@@ -63,5 +66,13 @@ public class TimeSlot {
     }
     public void setBooked(boolean b){
         this.booked = b;
+    }
+
+    public String getCounselorName() {
+        return counselorName;
+    }
+
+    public void setCounselorName(String name) {
+        this.counselorName = name;
     }
 }

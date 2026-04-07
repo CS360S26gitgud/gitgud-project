@@ -85,11 +85,26 @@ public class AvailabilityController {
                     for (QueryDocumentSnapshot doc : snapshots) {
                         slots.add(doc.toObject(TimeSlot.class));
                     }
-                    slots.sort((a, b) -> {
-                        int cmp = a.getDate().compareTo(b.getDate());
-                        return cmp != 0 ? cmp : a.getStartTime().compareTo(b.getStartTime());
-                    });
-                    cb.onSuccess(slots);
+                    if (slots.isEmpty()) {
+                        cb.onSuccess(slots);
+                        return;
+                    }
+                    // Hydrate names by fetching users collection once
+                    db.collection("users").get().addOnSuccessListener(usersSnap -> {
+                        java.util.Map<String, String> nameMap = new java.util.HashMap<>();
+                        for (QueryDocumentSnapshot uDoc : usersSnap) {
+                            nameMap.put(uDoc.getString("uid"), uDoc.getString("name"));
+                        }
+                        for (TimeSlot s : slots) {
+                            String name = nameMap.get(s.getCounselorId());
+                            s.setCounselorName(name != null ? name : "Unknown ID");
+                        }
+                        slots.sort((a, b) -> {
+                            int cmp = a.getDate().compareTo(b.getDate());
+                            return cmp != 0 ? cmp : a.getStartTime().compareTo(b.getStartTime());
+                        });
+                        cb.onSuccess(slots);
+                    }).addOnFailureListener(cb::onFailure);
                 })
                 .addOnFailureListener(cb::onFailure);
     }

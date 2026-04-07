@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class StudentDashboardActivity extends AppCompatActivity {
 
     private TextView tvWelcome;
-    private Button btnLogout, btnViewSlots;
+    private Button btnLogout, btnViewSlots, btnSearchCounselors, btnAppointmentHistory;
 
 
     @Override
@@ -29,6 +29,8 @@ public class StudentDashboardActivity extends AppCompatActivity {
         tvWelcome = findViewById(R.id.tvWelcome);
         btnLogout = findViewById(R.id.btnLogout);
         btnViewSlots = findViewById(R.id.btnViewSlots);
+        btnSearchCounselors = findViewById(R.id.btnSearchCounselors);
+        btnAppointmentHistory = findViewById(R.id.btnAppointmentHistory);
 
         // Show the logged in user's email
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -39,6 +41,14 @@ public class StudentDashboardActivity extends AppCompatActivity {
 
         btnViewSlots.setOnClickListener(v -> {
             startActivity(new Intent(this, AvailableSlotsActivity.class));
+        });
+
+        btnSearchCounselors.setOnClickListener(v -> {
+            startActivity(new Intent(this, CounselorSearchActivity.class));
+        });
+
+        btnAppointmentHistory.setOnClickListener(v -> {
+            startActivity(new Intent(this, AppointmentHistoryActivity.class));
         });
 
 

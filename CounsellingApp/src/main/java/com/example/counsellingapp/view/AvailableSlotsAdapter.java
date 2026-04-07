@@ -37,8 +37,9 @@ public class AvailableSlotsAdapter extends RecyclerView.Adapter<AvailableSlotsAd
     public void onBindViewHolder(@NonNull SlotViewHolder holder, int position) {
         TimeSlot slot = slots.get(position);
 
-        // (Displaying the ID instead of name to avoid another slow database call for now)
-        holder.tvCounselorName.setText("Counselor ID: " + slot.getCounselorId());
+        // Check if we populated the name; if not fallback to ID
+        String displayName = slot.getCounselorName() != null ? slot.getCounselorName() : "ID: " + slot.getCounselorId();
+        holder.tvCounselorName.setText("Counselor: " + displayName);
         holder.tvTime.setText("Date: " + slot.getDate() + " | " + slot.getStartTime() + " - " + slot.getEndTime());
 
         holder.btnBookSlot.setOnClickListener(v -> clickListener.onBookClicked(slot));

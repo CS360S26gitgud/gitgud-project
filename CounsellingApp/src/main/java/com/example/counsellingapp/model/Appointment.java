@@ -23,6 +23,10 @@ public class Appointment {
     private String counselorId;
     private String timeslotId;
     private String status;//states:"upcoming" | "cancelled" | "completed"
+    
+    // Haris's fields
+    private String counselorName;
+    private com.google.firebase.Timestamp dateTime;
 
     //Resolved at runtime by AppointmentController (never persists)
     @com.google.firebase.firestore.Exclude //Exclude makes sure firestore only works with IDs and not objects.
@@ -76,6 +80,12 @@ public class Appointment {
     public void setStatus(String status){
         this.status = status;
     }
+
+    public String getCounselorName() { return counselorName; }
+    public void setCounselorName(String counselorName) { this.counselorName = counselorName; }
+
+    public com.google.firebase.Timestamp getDateTime() { return dateTime; }
+    public void setDateTime(com.google.firebase.Timestamp dateTime) { this.dateTime = dateTime; }
 
     //Resolved object accessors (set by controller)
     /*Student BLOCK*/

@@ -5,6 +5,7 @@ import com.example.counsellingapp.model.TimeSlot;
 import com.example.counsellingapp.model.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,5 +166,17 @@ public class AppointmentController {
                     return null;
                 }).addOnSuccessListener(v -> cb.onSuccess())
                 .addOnFailureListener(cb::onFailure);
+    }
+
+    public void getStudentAppointmentHistory(String studentId, AppointmentListCallback callback) {
+        db.collection(COL_APPOINTMENTS)
+                .whereEqualTo("studentId", studentId)
+                .orderBy("dateTime", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<Appointment> appointments = queryDocumentSnapshots.toObjects(Appointment.class);
+                    callback.onSuccess(appointments);
+                })
+                .addOnFailureListener(callback::onFailure);
     }
 }

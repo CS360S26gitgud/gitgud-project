@@ -25,6 +25,14 @@
         <activity android:name=".view.AvailableSlotsActivity"
             android:exported="false"/>
 
+        <activity android:name=".view.CounselorSearchActivity"
+            android:exported="false"
+            android:label="Search Counselors"/>
+
+        <activity android:name=".view.AppointmentHistoryActivity"
+            android:exported="false"
+            android:label="Appointment History"/>
+
         <activity android:name=".view.CounselorDashboardActivity" />
         <activity android:name=".view.SetAvailabilityActivity" />
     </application>

@@ -11,9 +11,19 @@ public class User {
     private String name;
     private String email;
     private String role;
+    
+    // Counselor specific fields
+    private String specialization;
+    private java.util.List<String> availableDays; // e.g., ["Monday", "Wednesday"]
 
     // Required empty constructor for Firestore deserialization
     public User() {}
+
+    public String getSpecialization() { return specialization; }
+    public void setSpecialization(String specialization) { this.specialization = specialization; }
+
+    public java.util.List<String> getAvailableDays() { return availableDays; }
+    public void setAvailableDays(java.util.List<String> availableDays) { this.availableDays = availableDays; }
 
     public User(String uid, String name, String email, String role) {
         this.uid = uid;

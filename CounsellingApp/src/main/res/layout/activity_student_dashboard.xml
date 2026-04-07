@@ -24,6 +24,20 @@
         android:layout_marginBottom="32dp"/>
 
     <Button
+        android:id="@+id/btnSearchCounselors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search Counselors"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btnAppointmentHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Appointment History"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
         android:id="@+id/btnViewSlots"
         android:text="Find Available Slots"
         android:layout_width="match_parent"
