@@ -220,4 +220,5 @@ Figma Link: https://www.figma.com/design/lBmBmam8cPsedxzZHFOvHT/Untitled?node-id
 
 
 ### Wireframes – Project Part 3
-_Add screenshots or links to wireframe images._
+https://www.figma.com/design/9tbCnKh09sKs0SWIfbQw7Z/Untitled?node-id=0-1&t=8UdXn699FCeXaS7w-1
+![StoryBoard](doc/images/Component.png)
