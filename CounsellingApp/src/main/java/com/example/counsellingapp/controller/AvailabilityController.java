@@ -1,5 +1,6 @@
 package com.example.counsellingapp.controller;
 
+import com.example.counsellingapp.model.Appointment;
 import com.example.counsellingapp.model.TimeSlot;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -75,9 +76,36 @@ public class AvailabilityController {
                 .addOnFailureListener(cb::onFailure);
     }
 
+    public void getAllAvailableSlots(SlotListCallback cb) {
+        db.collection(COLLECTION)
+                .whereEqualTo("booked", false)
+                .get()
+                .addOnSuccessListener(snapshots -> {
+                    List<TimeSlot> slots = new ArrayList<>();
+                    for (QueryDocumentSnapshot doc : snapshots) {
+                        slots.add(doc.toObject(TimeSlot.class));
+                    }
+                    slots.sort((a, b) -> {
+                        int cmp = a.getDate().compareTo(b.getDate());
+                        return cmp != 0 ? cmp : a.getStartTime().compareTo(b.getStartTime());
+                    });
+                    cb.onSuccess(slots);
+                })
+                .addOnFailureListener(cb::onFailure);
+    }
+
+
     /** Separate typed callback for list results. */
     public interface SlotListCallback {
         void onSuccess(List<TimeSlot> slots);
         void onFailure(Exception e);
     }
+
+    public interface BookingCallback {
+        void onSuccess();
+        void onFailure(Exception e);
+    }
+
+
+
 }

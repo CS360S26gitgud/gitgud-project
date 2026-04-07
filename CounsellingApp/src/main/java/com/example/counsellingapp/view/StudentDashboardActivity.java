@@ -18,7 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class StudentDashboardActivity extends AppCompatActivity {
 
     private TextView tvWelcome;
-    private Button btnLogout;
+    private Button btnLogout, btnViewSlots;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +28,19 @@ public class StudentDashboardActivity extends AppCompatActivity {
 
         tvWelcome = findViewById(R.id.tvWelcome);
         btnLogout = findViewById(R.id.btnLogout);
+        btnViewSlots = findViewById(R.id.btnViewSlots);
 
         // Show the logged in user's email
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             tvWelcome.setText("Welcome, " + user.getEmail());
         }
+
+
+        btnViewSlots.setOnClickListener(v -> {
+            startActivity(new Intent(this, AvailableSlotsActivity.class));
+        });
+
 
         btnLogout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();

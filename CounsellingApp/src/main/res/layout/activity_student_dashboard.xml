@@ -24,6 +24,13 @@
         android:layout_marginBottom="32dp"/>
 
     <Button
+        android:id="@+id/btnViewSlots"
+        android:text="Find Available Slots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
         android:id="@+id/btnLogout"
         android:text="Log Out"
         android:layout_width="match_parent"

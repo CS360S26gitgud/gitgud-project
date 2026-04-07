@@ -129,4 +129,41 @@ public class AppointmentController {
                     });
         }
     }
+
+    public interface BookingCallback {
+        void onSuccess();
+        void onFailure(Exception e);
+    }
+
+    /**
+     * US-04: Securely books a slot using a Firestore Transaction.
+     */
+    public void bookSlot(TimeSlot slot, String studentId, BookingCallback cb) {
+        com.google.firebase.firestore.DocumentReference slotRef = db.collection(COL_AVAILABILITY).document(slot.getId());
+        com.google.firebase.firestore.DocumentReference newApptRef = db.collection(COL_APPOINTMENTS).document();
+
+        db.runTransaction((com.google.firebase.firestore.Transaction.Function<Void>) transaction -> {
+                    com.google.firebase.firestore.DocumentSnapshot snapshot = transaction.get(slotRef);
+                    Boolean isBooked = snapshot.getBoolean("booked");
+
+                    // Checking one last time that no one stole the slot milliseconds before us!
+                    if (isBooked != null && isBooked) {
+                        throw new com.google.firebase.firestore.FirebaseFirestoreException(
+                                "Slot was just taken!",
+                                com.google.firebase.firestore.FirebaseFirestoreException.Code.ABORTED);
+                    }
+
+                    // 1. Mark the slot as officially taken
+                    transaction.update(slotRef, "booked", true);
+
+                    // 2. Create the actual Appointment ticket
+                    Appointment appt = new Appointment(
+                            newApptRef.getId(), studentId, slot.getCounselorId(), slot.getId(), "upcoming"
+                    );
+                    transaction.set(newApptRef, appt);
+
+                    return null;
+                }).addOnSuccessListener(v -> cb.onSuccess())
+                .addOnFailureListener(cb::onFailure);
+    }
 }

@@ -22,6 +22,9 @@
         <activity android:name=".view.LoginActivity" />
         <activity android:name=".view.RegisterActivity" />
         <activity android:name=".view.StudentDashboardActivity" />
+        <activity android:name=".view.AvailableSlotsActivity"
+            android:exported="false"/>
+
         <activity android:name=".view.CounselorDashboardActivity" />
         <activity android:name=".view.SetAvailabilityActivity" />
     </application>
