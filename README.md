@@ -177,6 +177,28 @@ Project Part 1 did not include making a backlog
 ### Product Backlog – Project Part 3
 | ID | User Story | Priority | Status |
 |----|------------|----------|--------|
+| 01 | As a student, I want to register for an account using my university credentials so that I can request counseling sessions | High | Completed |
+| 02 | As a student, I want to log in securely so that my personal information (like appointment data) is protected | High | Completed |
+| 03 | As a student, I want to view available counseling slots so that I can choose a suitable time | Low | Completed |
+| 04 | As a student, I want to book a counseling appointment so that I can receive guidance and/or support | Low | Completed |
+| 05 | As a student, I want to cancel or reschedule an appointment so that I can manage the conflicts in my schedule | Medium | To Do |
+| 06 | As a student, I want to be able to review and rate my counseling session anonymously so that I can provide feedback about the counselor | Medium | To Do |
+| 07 | As a student, I want to be able to view the reviews of a counselor so that I can ascertain the best of my options | Low | To Do |
+| 08 | As a student, I want to receive appointment notifications so that I don’t miss my session | Medium | To Do |
+| 09 | As a student, I want to be able to passively keep track of appointments using a calendar | Low | To Do |
+| 10 | As a student, I want to be able to search/filter through the available list of counselors by their specializations or availability, so I can find the most suitable person | Low | Completed |
+| 11 | As a student, I want to view my appointment history so that I can keep track of past sessions | Low | Completed |
+| 12 | As a counselor, I want to log in so that I can manage my appointments | High | Completed |
+| 13 | As a counselor, I want to set/update my availability so that students can book sessions | Medium | Completed |
+| 14 | As a counselor, I want to view my upcoming appointments so that I can prepare in advance | Low | Completed |
+| 15 | As a counselor, I want to view the students’ feedback and their ratings so I can improve my shortcomings | Low | To Do |
+| 16 | As a counselor, I want to cancel or reschedule appointments if necessary so that students can be notified | Medium | To Do |
+| 17 | As a counselor, I want to have the option of being able to list relevant material for an appointment | High | To Do |
+| 18 | As an admin, I want to create, update, or deactivate student accounts so that I can ensure organization | High | To Do |
+| 19 | As an admin, I want to manage counselor profiles and their permissions so that only authorized counselors can book | High | To Do |
+| 20 | As an admin, I want to stop a counselor from taking appointments if their reviews fall below a threshold | Medium | To Do |
+| 21 | As an admin, I want to monitor system activity so I can ensure proper functioning | High | To Do |
+
 
 ---
 
