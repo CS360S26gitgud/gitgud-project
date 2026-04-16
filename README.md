@@ -128,16 +128,15 @@
 
 ## Object-Oriented Analysis — CRC Cards
 
-![CRC Cards](doc/images/crc_Services.png)
-
-![CRC Cards](doc/images/crc_Entities.png)
+![CRC Services](docs/images/crc_Services.png)
+![CRC Entities](docs/images/crc_Entities.png)
 
 ---  
 
 ## UML Diagrams
 ### UML – Project Part 3
 
-![UML Diagram](doc/images/UML_Diagram_Part_3.jpeg)
+![UML Diagram Part 3](docs/images/UML_Diagram_Part_3.jpeg)
 
 ---
 
