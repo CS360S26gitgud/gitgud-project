@@ -224,17 +224,16 @@
 ## Wireframes
 ### Wireframes – Project Part 2
 
-Figma Link: https://www.figma.com/design/lBmBmam8cPsedxzZHFOvHT/Untitled?node-id=0-1&t=zVeL3bU7puA0neHP-1
+[Figma Link](https://www.figma.com/design/lBmBmam8cPsedxzZHFOvHT/Untitled?node-id=0-1&t=zVeL3bU7puA0neHP-1)
 
-![Student Dashboard Connections](doc/images/Student-Dashboard.png)
-
-![Instructor & Admin](doc/images/Instructor-and-Admin.png)
+![Student Dashboard](docs/images/Student-Dashboard.png)
+![Instructor and Admin](docs/images/Instructor-and-Admin.png)
 
 ### Wireframes – Project Part 3
 
-https://www.figma.com/design/9tbCnKh09sKs0SWIfbQw7Z/Untitled?node-id=0-1&t=8UdXn699FCeXaS7w-1
+[Figma Link](https://www.figma.com/design/9tbCnKh09sKs0SWIfbQw7Z/Untitled?node-id=0-1&t=8UdXn699FCeXaS7w-1)
 
-![StoryBoard](doc/images/Component.png)
+![Component Diagram](docs/images/Component.png)
 
 ---
 
