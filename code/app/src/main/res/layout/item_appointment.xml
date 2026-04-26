@@ -40,5 +40,13 @@
             android:layout_marginTop="2dp"
             android:textColor="#4CAF50" />
 
+        <Button
+            android:id="@+id/btnMarkCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mark as Completed"
+            android:layout_marginTop="8dp"
+            android:visibility="gone" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

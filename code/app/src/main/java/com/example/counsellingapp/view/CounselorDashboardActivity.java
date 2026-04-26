@@ -29,6 +29,7 @@ public class CounselorDashboardActivity extends AppCompatActivity {
 
     private TextView tvWelcome, tvEmpty;
     private Button btnLogout, btnSetAvailability;
+    private Button btnMyReviews;
     private RecyclerView rvAppointments;
     private ProgressBar progressBar;// cool little ai find
 
@@ -45,6 +46,7 @@ public class CounselorDashboardActivity extends AppCompatActivity {
         tvEmpty = findViewById(R.id.tvNoAppointments);
         btnLogout = findViewById(R.id.btnCounselorLogout);
         btnSetAvailability = findViewById(R.id.btnSetAvailability);
+        btnMyReviews = findViewById(R.id.btnMyReviews);
         rvAppointments= findViewById(R.id.rvAppointments);
         progressBar= findViewById(R.id.progressBar);
 
@@ -58,6 +60,16 @@ public class CounselorDashboardActivity extends AppCompatActivity {
 
         btnSetAvailability.setOnClickListener(v ->
                 startActivity(new Intent(this, SetAvailabilityActivity.class)));
+
+        btnMyReviews.setOnClickListener(v -> {
+            FirebaseUser current = FirebaseAuth.getInstance().getCurrentUser();
+            if (current != null) {
+                Intent intent = new Intent(this, CounselorReviewsActivity.class);
+                intent.putExtra(CounselorReviewsActivity.EXTRA_COUNSELOR_ID, current.getUid());
+                intent.putExtra(CounselorReviewsActivity.EXTRA_COUNSELOR_NAME, current.getEmail());
+                startActivity(intent);
+            }
+        });
 
         btnLogout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();

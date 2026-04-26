@@ -164,4 +164,21 @@ public class AppointmentController {
                 })
                 .addOnFailureListener(callback::onFailure);
     }
+
+    /**
+     * Marks an appointment as completed in Firestore.
+     * Called by the counselor from their dashboard appointment list.
+     * Once completed, the student will see a "Leave a Review" button
+     * for this appointment in their history screen.
+     *
+     * @param appointmentId The Firestore document ID of the appointment to update.
+     * @param cb            Fires onSuccess() on write completion, onFailure() on error.
+     */
+    public void markAsCompleted(String appointmentId, BookingCallback cb) {
+        db.collection(COL_APPOINTMENTS)
+                .document(appointmentId)
+                .update("status", "completed")
+                .addOnSuccessListener(v -> cb.onSuccess())
+                .addOnFailureListener(cb::onFailure);
+    }
 }

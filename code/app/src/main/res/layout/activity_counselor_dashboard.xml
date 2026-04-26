@@ -21,6 +21,13 @@
         android:text="Set / Update Availability"
         android:layout_marginBottom="16dp" />
 
+    <Button
+        android:id="@+id/btnMyReviews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Reviews"
+        android:layout_marginTop="8dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
