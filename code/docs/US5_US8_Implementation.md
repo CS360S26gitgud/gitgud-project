@@ -1,15 +1,15 @@
 # Implementation Documentation: Appointment Management & Notifications
 
-This document combines the implementation details for **User Story 5 (Cancel / Reschedule Appointment)** and **User Story 8 (Appointment Notifications)**.
+This document combines the implementation details for **User Story 5 (Cancel / Reschedule Appointment)** and **User Story 8 (Appointment Notifications)**, covering both **Student** and **Counselor** perspectives.
 
 ---
 
 ## 1. Overview
-These features provide students with full control over their scheduled sessions and ensure they receive immediate feedback via system notifications when changes occur.
+These features provide both students and counselors with full control over their scheduled sessions and ensure immediate feedback via system notifications when changes occur.
 
 ### Fulfillment:
-- **US5**: Allows students to cancel or move upcoming appointments, ensuring counselors' time is freed up and students can manage their schedules.
-- **US8**: Alerts students through Android system notifications whenever an appointment is booked or rescheduled.
+- **US5 (Student & Counselor)**: Allows both parties to cancel or move upcoming appointments. Counselor-side changes automatically notify the student.
+- **US8**: Alerts students through Android system notifications whenever an appointment is booked, rescheduled, or cancelled by a counselor.
 
 ---
 
@@ -17,35 +17,38 @@ These features provide students with full control over their scheduled sessions 
 
 ### A. Model & Controller Layer
 - **`controller/NotificationHelper.java` (NEW)**:
-    - Added to handle the creation of `NotificationChannel` and dispatching local notifications.
+    - Utility to handle `NotificationChannel` (Android 8.0+) and dispatching local notifications.
 - **`controller/AppointmentController.java` (UPDATED)**:
-    - Added `cancelAppointment`: Uses Firestore Transactions to atomically update appointment status to "cancelled" and set the TimeSlot to "booked: false".
-    - Added `rescheduleAppointment`: Uses Firestore Transactions to swap TimeSlots, ensuring the old one is freed and the new one is reserved only if available.
-    - Integrated `NotificationHelper`: Called inside `bookSlot` and `rescheduleAppointment` success callbacks.
+    - `cancelAppointment`: Student-driven cancellation.
+    - `cancelAppointmentByCounselor`: Counselor-driven cancellation with student notification.
+    - `rescheduleAppointment`: Student-driven reschedule.
+    - `rescheduleAppointmentByCounselor`: Counselor-driven reschedule with student notification.
+    - All methods use **Firestore Transactions** to ensure atomic updates between Appointment and TimeSlot documents.
 
 ### B. View & Adapter Layer
-- **`view/HistoryAdapter.java` (UPDATED)**:
-    - Added `OnAppointmentInteractionListener` interface.
-    - Added logic to show "Cancel" and "Reschedule" buttons only for "upcoming" appointments.
-- **`view/AppointmentHistoryActivity.java` (UPDATED)**:
-    - Implemented the interaction listener to trigger confirmation and selection dialogs.
-    - Added logic to fetch all available slots for rescheduling selection.
-- **`view/AvailableSlotsActivity.java` (UPDATED)**:
-    - Updated `bookSlot` call to pass `Activity` context for notification support.
-- **`layout/item_history_appointment.xml` (UPDATED)**:
-    - Added the "Cancel" and "Reschedule" buttons to the history item UI.
+- **`view/HistoryAdapter.java` & `view/AppointmentHistoryActivity.java`**:
+    - Student-side UI for managing history and triggering actions.
+- **`view/AppointmentAdapter.java` & `view/CounselorDashboardActivity.java`**:
+    - Counselor-side UI. Added "Cancel" and "Reschedule" buttons to the appointment cards and implemented the dialog logic.
+- **`layout/item_history_appointment.xml` & `layout/item_appointment.xml`**:
+    - Added UI buttons for management actions.
 
 ---
 
 ## 3. How to Navigate & Test
 
-### Navigation:
+### Student Perspective:
 1. **Login** as a Student.
-2. **To Book**: Go to **Available Slots** from the Dashboard. Select a slot and click "Yes".
-3. **To Manage**: Go to **Appointment History** from the Dashboard. All upcoming sessions will show "Cancel" and "Reschedule" buttons.
+2. **Book**: Navigate to **Available Slots** and book a session.
+3. **Manage**: Go to **Appointment History**. Use "Cancel" or "Reschedule" buttons.
+4. **Verification**: Observe status changes in the list and system notifications for each action.
 
-### Testing Output:
-- **Notifications**: Immediately after booking or rescheduling, a notification appears in the Android system tray with details (Counselor name, Date, Time).
-- **Cancellation**: The appointment status changes to "cancelled" and the counselor's slot becomes visible again in "Available Slots".
-- **Rescheduling**: The appointment updates to the new time, and the previous slot is automatically released back into the pool.
-- **Concurrency**: If two users try to take the same slot during a reschedule, the transaction logic ensures only one succeeds, showing an error to the other.
+### Counselor Perspective:
+1. **Login** as a Counselor.
+2. **Manage**: On the **Dashboard**, upcoming appointments now show "Cancel" and "Reschedule" buttons.
+3. **Cancel**: Click "Cancel" -> Confirm. The student will receive a notification.
+4. **Reschedule**: Click "Reschedule" -> Select a new available slot. The appointment updates and the student is notified of the new time.
+
+### Technical Verification:
+- **Atomic State**: In Firestore, verify that `booked` status of slots always stays in sync with `status` of appointments.
+- **Notifications**: Check the Android system tray (pull down from top) to see alerts for "Appointment Booked", "Appointment Cancelled", and "Appointment Rescheduled".

@@ -80,15 +80,22 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
         holder.tvCounselorName.setText("Counselor: " + counselorName);
         holder.tvDateTime.setText("Date: " + dateStr);
-        holder.tvStatus.setText("Status: " + appt.getStatus());
+        
+        String status = appt.getStatus();
+        holder.tvStatus.setText("Status: " + status);
 
-        // Reset visibility to avoid state leakage in recycled views
+        // Reset visibility and colors to avoid state leakage in recycled views
         holder.btnLeaveReview.setVisibility(View.GONE);
         holder.tvReviewSubmitted.setVisibility(View.GONE);
         holder.btnCancelAppt.setVisibility(View.GONE);
         holder.btnRescheduleAppt.setVisibility(View.GONE);
 
-        if ("completed".equals(appt.getStatus())) {
+        if ("rescheduled".equals(status)) {
+            holder.tvStatus.setTextColor(android.graphics.Color.BLUE);
+        } else if ("cancelled".equals(status)) {
+            holder.tvStatus.setTextColor(android.graphics.Color.RED);
+        } else if ("completed".equals(status)) {
+            holder.tvStatus.setTextColor(android.graphics.Color.parseColor("#4CAF50"));
             if (reviewedIds.contains(appt.getId())) {
                 holder.tvReviewSubmitted.setVisibility(View.VISIBLE);
             } else {
@@ -101,12 +108,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                     ctx.startActivity(intent);
                 });
             }
-        } else if ("upcoming".equals(appt.getStatus())) {
+        } else if ("upcoming".equals(status)) {
+            holder.tvStatus.setTextColor(android.graphics.Color.BLACK);
             holder.btnCancelAppt.setVisibility(View.VISIBLE);
             holder.btnRescheduleAppt.setVisibility(View.VISIBLE);
             
             holder.btnCancelAppt.setOnClickListener(v -> listener.onCancel(appt));
             holder.btnRescheduleAppt.setOnClickListener(v -> listener.onReschedule(appt));
+        } else {
+            holder.tvStatus.setTextColor(android.graphics.Color.BLACK);
         }
     }
 

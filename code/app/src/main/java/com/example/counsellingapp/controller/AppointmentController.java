@@ -23,8 +23,20 @@ public class AppointmentController {
     private static final String COL_USERS        = "users";
     private static final String COL_AVAILABILITY = "availability";
 
+    /**
+     * Callback interface for appointment list fetching operations.
+     */
     public interface AppointmentListCallback {
+        /**
+         * Invoked when appointments are successfully fetched and resolved.
+         * @param appointments The list of resolved Appointment objects.
+         */
         void onSuccess(List<Appointment> appointments);
+
+        /**
+         * Invoked when the fetch operation fails.
+         * @param e The exception that occurred.
+         */
         void onFailure(Exception e);
     }
 
@@ -33,8 +45,8 @@ public class AppointmentController {
      * each collaborating object (Student, Counselor, TimeSlot) before
      * delivering to the callback.
      *
-     * @param counselorId The ID of the counselor.
-     * @param cb          Callback for success or failure.
+     * @param counselorId The unique ID of the counselor.
+     * @param cb          The callback to handle success or failure.
      */
     public void getUpcomingForCounselor(String counselorId, AppointmentListCallback cb) {
 
@@ -63,6 +75,9 @@ public class AppointmentController {
      * For each Appointment, fire three parallel Firestore reads to fetch the
      * Student (User), Counselor (User), and TimeSlot objects.
      * Only calls cb.onSuccess() once ALL appointments are fully resolved.
+     *
+     * @param appointments The list of raw appointment objects to resolve.
+     * @param cb           The callback to trigger once resolution is complete.
      */
     private void resolveCollaborators(List<Appointment> appointments,
                                       AppointmentListCallback cb) {
@@ -116,8 +131,19 @@ public class AppointmentController {
         }
     }
 
+    /**
+     * Callback interface for booking and management operations.
+     */
     public interface BookingCallback {
+        /**
+         * Invoked when the operation completes successfully.
+         */
         void onSuccess();
+
+        /**
+         * Invoked when the operation fails.
+         * @param e The exception that occurred.
+         */
         void onFailure(Exception e);
     }
 
@@ -128,7 +154,7 @@ public class AppointmentController {
      * @param context   The context to trigger the notification.
      * @param slot      The TimeSlot to book.
      * @param studentId The ID of the student booking the slot.
-     * @param cb        Callback for success or failure.
+     * @param cb        The callback to handle the result.
      */
     public void bookSlot(Context context, TimeSlot slot, String studentId, BookingCallback cb) {
         com.google.firebase.firestore.DocumentReference slotRef = db.collection(COL_AVAILABILITY).document(slot.getId());
@@ -167,9 +193,9 @@ public class AppointmentController {
      * US-05: Cancels an existing appointment and marks the associated timeslot as available.
      * Uses a transaction to ensure both updates succeed or fail together.
      *
-     * @param appointmentId The ID of the appointment to cancel.
-     * @param timeslotId    The ID of the timeslot associated with the appointment.
-     * @param cb            Callback for success or failure.
+     * @param appointmentId The unique ID of the appointment to cancel.
+     * @param timeslotId    The unique ID of the timeslot to free.
+     * @param cb            The callback to handle the result.
      */
     public void cancelAppointment(String appointmentId, String timeslotId, BookingCallback cb) {
         com.google.firebase.firestore.DocumentReference apptRef = db.collection(COL_APPOINTMENTS).document(appointmentId);
@@ -184,59 +210,119 @@ public class AppointmentController {
     }
 
     /**
-     * US-05: Reschedules an appointment to a new timeslot.
-     * Uses a transaction to:
-     * 1. Validate the new slot is available.
-     * 2. Free the old slot.
-     * 3. Book the new slot.
-     * 4. Update the appointment record.
+     * Counselor cancels an appointment and notifies the student.
      *
-     * @param context        The context to trigger the notification.
-     * @param appointmentId  The ID of the appointment to reschedule.
-     * @param oldTimeslotId The ID of the currently booked timeslot.
-     * @param newSlot        The new TimeSlot object chosen by the student.
-     * @param cb             Callback for success or failure.
+     * @param context The context for notification.
+     * @param appt    The appointment object being cancelled.
+     * @param cb      The callback to handle the result.
+     */
+    public void cancelAppointmentByCounselor(Context context, Appointment appt, BookingCallback cb) {
+        com.google.firebase.firestore.DocumentReference apptRef = db.collection(COL_APPOINTMENTS).document(appt.getId());
+        com.google.firebase.firestore.DocumentReference slotRef = db.collection(COL_AVAILABILITY).document(appt.getTimeslotId());
+
+        db.runTransaction((com.google.firebase.firestore.Transaction.Function<Void>) transaction -> {
+            transaction.update(apptRef, "status", "cancelled");
+            transaction.update(slotRef, "booked", false);
+            return null;
+        }).addOnSuccessListener(v -> {
+            String msg = "Your appointment with Counselor " + appt.getCounselorName() + " has been cancelled.";
+            NotificationHelper.sendNotification(context, "Appointment Cancelled", msg);
+            cb.onSuccess();
+        }).addOnFailureListener(cb::onFailure);
+    }
+
+    /**
+     * US-05: Reschedules an appointment to a new timeslot (Student-initiated).
+     * Creates a new appointment and marks the old one as "cancelled" for transparency.
+     *
+     * @param context       The context for notification.
+     * @param appointmentId The ID of the existing appointment.
+     * @param oldTimeslotId The ID of the old timeslot.
+     * @param newSlot       The new TimeSlot object.
+     * @param cb            The callback to handle the result.
      */
     public void rescheduleAppointment(Context context, String appointmentId, String oldTimeslotId, TimeSlot newSlot, BookingCallback cb) {
-        com.google.firebase.firestore.DocumentReference apptRef = db.collection(COL_APPOINTMENTS).document(appointmentId);
+        com.google.firebase.firestore.DocumentReference oldApptRef = db.collection(COL_APPOINTMENTS).document(appointmentId);
+        com.google.firebase.firestore.DocumentReference newApptRef = db.collection(COL_APPOINTMENTS).document();
         com.google.firebase.firestore.DocumentReference oldSlotRef = db.collection(COL_AVAILABILITY).document(oldTimeslotId);
         com.google.firebase.firestore.DocumentReference newSlotRef = db.collection(COL_AVAILABILITY).document(newSlot.getId());
 
         db.runTransaction((com.google.firebase.firestore.Transaction.Function<Void>) transaction -> {
-            com.google.firebase.firestore.DocumentSnapshot snapshot = transaction.get(newSlotRef);
-            Boolean isBooked = snapshot.getBoolean("booked");
+            com.google.firebase.firestore.DocumentSnapshot oldAppt = transaction.get(oldApptRef);
+            com.google.firebase.firestore.DocumentSnapshot slotSnap = transaction.get(newSlotRef);
 
-            if (isBooked != null && isBooked) {
-                throw new com.google.firebase.firestore.FirebaseFirestoreException(
-                        "New slot was just taken!",
-                        com.google.firebase.firestore.FirebaseFirestoreException.Code.ABORTED);
+            if (Boolean.TRUE.equals(slotSnap.getBoolean("booked"))) {
+                throw new com.google.firebase.firestore.FirebaseFirestoreException("Slot taken", com.google.firebase.firestore.FirebaseFirestoreException.Code.ABORTED);
             }
 
+            // Mark old as cancelled (Student side transparency)
+            transaction.update(oldApptRef, "status", "cancelled");
             transaction.update(oldSlotRef, "booked", false);
-            transaction.update(newSlotRef, "booked", true);
-            transaction.update(apptRef,
-                    "timeslotId", newSlot.getId(),
-                    "counselorId", newSlot.getCounselorId(),
-                    "counselorName", newSlot.getCounselorName()
+
+            // Create new appointment
+            Appointment newAppt = new Appointment(
+                    newApptRef.getId(), oldAppt.getString("studentId"), 
+                    newSlot.getCounselorId(), newSlot.getId(), "upcoming"
             );
+            newAppt.setCounselorName(newSlot.getCounselorName());
+            transaction.set(newApptRef, newAppt);
+            transaction.update(newSlotRef, "booked", true);
 
             return null;
         }).addOnSuccessListener(v -> {
-            // US-08: Trigger local notification for rescheduling
-            String msg = "Session rescheduled with " + newSlot.getCounselorName() + 
-                         " to " + newSlot.getDate() + " at " + newSlot.getStartTime();
+            NotificationHelper.sendNotification(context, "Appointment Rescheduled", "You moved your appointment to " + newSlot.getDate());
+            cb.onSuccess();
+        }).addOnFailureListener(cb::onFailure);
+    }
+
+    /**
+     * Counselor reschedules an appointment and notifies the student.
+     * Creates a new appointment and marks the old one as "rescheduled" for student transparency.
+     *
+     * @param context The context for notification.
+     * @param appt    The appointment object being moved.
+     * @param newSlot The new TimeSlot object.
+     * @param cb      The callback to handle the result.
+     */
+    public void rescheduleAppointmentByCounselor(Context context, Appointment appt, TimeSlot newSlot, BookingCallback cb) {
+        com.google.firebase.firestore.DocumentReference oldApptRef = db.collection(COL_APPOINTMENTS).document(appt.getId());
+        com.google.firebase.firestore.DocumentReference newApptRef = db.collection(COL_APPOINTMENTS).document();
+        com.google.firebase.firestore.DocumentReference oldSlotRef = db.collection(COL_AVAILABILITY).document(appt.getTimeslotId());
+        com.google.firebase.firestore.DocumentReference newSlotRef = db.collection(COL_AVAILABILITY).document(newSlot.getId());
+
+        db.runTransaction((com.google.firebase.firestore.Transaction.Function<Void>) transaction -> {
+            com.google.firebase.firestore.DocumentSnapshot slotSnap = transaction.get(newSlotRef);
+            if (Boolean.TRUE.equals(slotSnap.getBoolean("booked"))) {
+                throw new com.google.firebase.firestore.FirebaseFirestoreException("Slot taken", com.google.firebase.firestore.FirebaseFirestoreException.Code.ABORTED);
+            }
+
+            // Mark old as Rescheduled for transparency
+            transaction.update(oldApptRef, "status", "rescheduled");
+            transaction.update(oldSlotRef, "booked", false);
+
+            // Create new appointment
+            Appointment newAppt = new Appointment(
+                    newApptRef.getId(), appt.getStudentId(), 
+                    newSlot.getCounselorId(), newSlot.getId(), "upcoming"
+            );
+            newAppt.setCounselorName(newSlot.getCounselorName());
+            transaction.set(newApptRef, newAppt);
+            transaction.update(newSlotRef, "booked", true);
+
+            return null;
+        }).addOnSuccessListener(v -> {
+            String msg = "Counselor " + appt.getCounselorName() + " rescheduled your session to " + newSlot.getDate();
             NotificationHelper.sendNotification(context, "Appointment Rescheduled", msg);
             cb.onSuccess();
-        })
-          .addOnFailureListener(cb::onFailure);
+        }).addOnFailureListener(cb::onFailure);
     }
 
     /**
      * US-11: Fetches all appointments for a student and resolves
      * collaborators (Counselor, TimeSlot) before delivering to the callback.
      *
-     * @param studentId The ID of the student.
-     * @param callback  Callback for success or failure.
+     * @param studentId The unique ID of the student.
+     * @param callback  The callback to handle success or failure.
      */
     public void getStudentAppointmentHistory(String studentId, AppointmentListCallback callback) {
         db.collection(COL_APPOINTMENTS)

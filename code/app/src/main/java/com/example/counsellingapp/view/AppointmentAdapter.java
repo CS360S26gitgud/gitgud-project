@@ -18,20 +18,22 @@ import java.util.List;
 
 /**
  * RecyclerView adapter for displaying Appointment objects in the counselor dashboard.
- *
- * Updated to support marking appointments as completed (US-06 enabler).
- * "Mark as Completed" button is only shown on upcoming appointments.
- * Once tapped, the status updates in Firestore and the button is replaced
- * by the updated status text immediately in the UI without a full reload.
+ * Supports marking as completed, cancelling, and rescheduling.
  */
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.ViewHolder> {
 
-    private final List<Appointment> appointments;
-    private final AppointmentController appointmentController;
+    public interface OnAppointmentActionListener {
+        void onCancel(Appointment appointment);
+        void onReschedule(Appointment appointment);
+        void onComplete(Appointment appointment);
+    }
 
-    public AppointmentAdapter(List<Appointment> appointments) {
-        this.appointments          = appointments;
-        this.appointmentController = new AppointmentController();
+    private final List<Appointment> appointments;
+    private final OnAppointmentActionListener listener;
+
+    public AppointmentAdapter(List<Appointment> appointments, OnAppointmentActionListener listener) {
+        this.appointments = appointments;
+        this.listener     = listener;
     }
 
     @NonNull
@@ -57,35 +59,19 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.tvTime.setText("Time: " + startTime + " – " + endTime);
         holder.tvStatus.setText("Status: " + appt.getStatus());
 
-        // Only show the button on upcoming appointments
+        // Reset visibility
+        holder.btnMarkCompleted.setVisibility(View.GONE);
+        holder.btnCancel.setVisibility(View.GONE);
+        holder.btnReschedule.setVisibility(View.GONE);
+
         if ("upcoming".equals(appt.getStatus())) {
             holder.btnMarkCompleted.setVisibility(View.VISIBLE);
-            holder.btnMarkCompleted.setOnClickListener(v -> {
-                // Disable immediately to prevent double-taps
-                holder.btnMarkCompleted.setEnabled(false);
+            holder.btnCancel.setVisibility(View.VISIBLE);
+            holder.btnReschedule.setVisibility(View.VISIBLE);
 
-                appointmentController.markAsCompleted(appt.getId(),
-                        new AppointmentController.BookingCallback() {
-                            @Override
-                            public void onSuccess() {
-                                // Update the in-memory object and rebind this item —
-                                // no full list reload needed
-                                appt.setStatus("completed");
-                                notifyItemChanged(position);
-                            }
-
-                            @Override
-                            public void onFailure(Exception e) {
-                                holder.btnMarkCompleted.setEnabled(true);
-                                Toast.makeText(holder.itemView.getContext(),
-                                        "Failed to update: " + e.getMessage(),
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            });
-        } else {
-            // Completed or cancelled — hide the button
-            holder.btnMarkCompleted.setVisibility(View.GONE);
+            holder.btnMarkCompleted.setOnClickListener(v -> listener.onComplete(appt));
+            holder.btnCancel.setOnClickListener(v -> listener.onCancel(appt));
+            holder.btnReschedule.setOnClickListener(v -> listener.onReschedule(appt));
         }
     }
 
@@ -94,7 +80,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvStudentName, tvDate, tvTime, tvStatus;
-        Button   btnMarkCompleted;
+        Button   btnMarkCompleted, btnCancel, btnReschedule;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,6 +89,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             tvTime           = itemView.findViewById(R.id.tvTime);
             tvStatus         = itemView.findViewById(R.id.tvStatus);
             btnMarkCompleted = itemView.findViewById(R.id.btnMarkCompleted);
+            btnCancel        = itemView.findViewById(R.id.btnCancelByCounselor);
+            btnReschedule    = itemView.findViewById(R.id.btnRescheduleByCounselor);
         }
     }
 }
