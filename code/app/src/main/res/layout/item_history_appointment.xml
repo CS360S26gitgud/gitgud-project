@@ -30,13 +30,40 @@
         android:textSize="14sp"
         android:layout_marginTop="2dp" />
 
-    <Button
-        android:id="@+id/btnLeaveReview"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Leave a Review"
-        android:layout_marginTop="8dp"
-        android:visibility="gone" />
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/btnLeaveReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Leave a Review"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnCancelAppt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:backgroundTint="#F44336"
+            android:textColor="@android:color/white"
+            android:layout_marginEnd="4dp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnRescheduleAppt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Reschedule"
+            android:layout_marginStart="4dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvReviewSubmitted"

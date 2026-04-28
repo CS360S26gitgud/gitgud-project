@@ -18,24 +18,44 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * RecyclerView adapter for the student's appointment history screen (US-11 + US-06 hook).
- *
- * Per-item review state logic:
- *   - status == "completed" AND id NOT in reviewedIds → show "Leave a Review" button
- *   - status == "completed" AND id IN reviewedIds     → show "✓ Review submitted" label
- *   - status == "upcoming"  OR  "cancelled"           → neither element shown
- *
- * The reviewedIds Set is computed once in AppointmentHistoryActivity (one Firestore read)
- * and passed here at construction — no async work happens at bind time.
+ * RecyclerView adapter for the student's appointment history screen.
+ * Supports User Story 11 (View History), User Story 06 (Reviews), and 
+ * User Story 05 (Cancel and Reschedule).
  */
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
+    /**
+     * Listener interface for handling appointment management actions in the UI.
+     */
+    public interface OnAppointmentInteractionListener {
+        /**
+         * Triggered when the user clicks the Cancel button for an upcoming appointment.
+         * @param appointment The appointment to be cancelled.
+         */
+        void onCancel(Appointment appointment);
+
+        /**
+         * Triggered when the user clicks the Reschedule button for an upcoming appointment.
+         * @param appointment The appointment to be rescheduled.
+         */
+        void onReschedule(Appointment appointment);
+    }
+
     private final List<Appointment> appointments;
     private final Set<String> reviewedIds;
+    private final OnAppointmentInteractionListener listener;
 
-    public HistoryAdapter(List<Appointment> appointments, Set<String> reviewedIds) {
+    /**
+     * Constructs a new HistoryAdapter.
+     *
+     * @param appointments List of appointments to display.
+     * @param reviewedIds  Set of IDs for appointments that already have reviews.
+     * @param listener     Listener for cancel and reschedule actions.
+     */
+    public HistoryAdapter(List<Appointment> appointments, Set<String> reviewedIds, OnAppointmentInteractionListener listener) {
         this.appointments = appointments;
         this.reviewedIds  = reviewedIds;
+        this.listener     = listener;
     }
 
     @NonNull
@@ -51,8 +71,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         Appointment appt = appointments.get(position);
         Context ctx = holder.itemView.getContext();
 
-        String counselorName = appt.getCounselor() != null
-                ? appt.getCounselor().getName() : "N/A";
+        String counselorName = appt.getCounselorName() != null ? appt.getCounselorName() : 
+                (appt.getCounselor() != null ? appt.getCounselor().getName() : "N/A");
+                
         String dateStr = appt.getTimeSlot() != null
                 ? appt.getTimeSlot().getDate() + " at " + appt.getTimeSlot().getStartTime()
                 : "N/A";
@@ -61,37 +82,43 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.tvDateTime.setText("Date: " + dateStr);
         holder.tvStatus.setText("Status: " + appt.getStatus());
 
+        // Reset visibility to avoid state leakage in recycled views
+        holder.btnLeaveReview.setVisibility(View.GONE);
+        holder.tvReviewSubmitted.setVisibility(View.GONE);
+        holder.btnCancelAppt.setVisibility(View.GONE);
+        holder.btnRescheduleAppt.setVisibility(View.GONE);
+
         if ("completed".equals(appt.getStatus())) {
             if (reviewedIds.contains(appt.getId())) {
-                // Review already submitted — show confirmation, hide button
-                holder.btnLeaveReview.setVisibility(View.GONE);
                 holder.tvReviewSubmitted.setVisibility(View.VISIBLE);
             } else {
-                // Eligible for review — show button
                 holder.btnLeaveReview.setVisibility(View.VISIBLE);
-                holder.tvReviewSubmitted.setVisibility(View.GONE);
                 holder.btnLeaveReview.setOnClickListener(v -> {
                     Intent intent = new Intent(ctx, SubmitReviewActivity.class);
                     intent.putExtra(SubmitReviewActivity.EXTRA_APPOINTMENT_ID, appt.getId());
                     intent.putExtra(SubmitReviewActivity.EXTRA_COUNSELOR_ID, appt.getCounselorId());
-                    intent.putExtra(SubmitReviewActivity.EXTRA_COUNSELOR_NAME,
-                            appt.getCounselor() != null ? appt.getCounselor().getName() : "");
+                    intent.putExtra(SubmitReviewActivity.EXTRA_COUNSELOR_NAME, counselorName);
                     ctx.startActivity(intent);
                 });
             }
-        } else {
-            // Upcoming or cancelled — no review UI
-            holder.btnLeaveReview.setVisibility(View.GONE);
-            holder.tvReviewSubmitted.setVisibility(View.GONE);
+        } else if ("upcoming".equals(appt.getStatus())) {
+            holder.btnCancelAppt.setVisibility(View.VISIBLE);
+            holder.btnRescheduleAppt.setVisibility(View.VISIBLE);
+            
+            holder.btnCancelAppt.setOnClickListener(v -> listener.onCancel(appt));
+            holder.btnRescheduleAppt.setOnClickListener(v -> listener.onReschedule(appt));
         }
     }
 
     @Override
     public int getItemCount() { return appointments.size(); }
 
+    /**
+     * ViewHolder for appointment items in the history list.
+     */
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvCounselorName, tvDateTime, tvStatus, tvReviewSubmitted;
-        Button   btnLeaveReview;
+        Button   btnLeaveReview, btnCancelAppt, btnRescheduleAppt;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,6 +127,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             tvStatus          = itemView.findViewById(R.id.tvHistoryStatus);
             tvReviewSubmitted = itemView.findViewById(R.id.tvReviewSubmitted);
             btnLeaveReview    = itemView.findViewById(R.id.btnLeaveReview);
+            btnCancelAppt     = itemView.findViewById(R.id.btnCancelAppt);
+            btnRescheduleAppt = itemView.findViewById(R.id.btnRescheduleAppt);
         }
     }
 }

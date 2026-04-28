@@ -70,7 +70,8 @@ public class AvailableSlotsActivity extends AppCompatActivity {
     private void bookSlot(TimeSlot slot) {
         String studentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        appointmentController.bookSlot(slot, studentId, new AppointmentController.BookingCallback() {
+        // US-08: Pass context to enable local notifications from the controller
+        appointmentController.bookSlot(this, slot, studentId, new AppointmentController.BookingCallback() {
             @Override
             public void onSuccess() {
                 Toast.makeText(AvailableSlotsActivity.this, "Booked Successfully!", Toast.LENGTH_LONG).show();
