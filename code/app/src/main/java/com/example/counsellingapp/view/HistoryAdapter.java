@@ -1,3 +1,4 @@
+
 package com.example.counsellingapp.view;
 
 import android.content.Context;
@@ -19,7 +20,7 @@ import java.util.Set;
 
 /**
  * RecyclerView adapter for the student's appointment history screen.
- * Supports User Story 11 (View History), User Story 06 (Reviews), and 
+ * Supports User Story 11 (View History), User Story 06 (Reviews), and
  * User Story 05 (Cancel and Reschedule).
  */
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
@@ -71,18 +72,25 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         Appointment appt = appointments.get(position);
         Context ctx = holder.itemView.getContext();
 
-        String counselorName = appt.getCounselorName() != null ? appt.getCounselorName() : 
+        String counselorName = appt.getCounselorName() != null ? appt.getCounselorName() :
                 (appt.getCounselor() != null ? appt.getCounselor().getName() : "N/A");
-                
+
         String dateStr = appt.getTimeSlot() != null
                 ? appt.getTimeSlot().getDate() + " at " + appt.getTimeSlot().getStartTime()
                 : "N/A";
 
         holder.tvCounselorName.setText("Counselor: " + counselorName);
         holder.tvDateTime.setText("Date: " + dateStr);
-        
+
         String status = appt.getStatus();
         holder.tvStatus.setText("Status: " + status);
+        List<String> mats = appt.getMaterials();
+        if (mats != null && !mats.isEmpty()) {
+            holder.tvHistoryMaterials.setText("Materials:\n" + String.join("\n", mats));
+            holder.tvHistoryMaterials.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvHistoryMaterials.setVisibility(View.GONE);
+        }
 
         // Reset visibility and colors to avoid state leakage in recycled views
         holder.btnLeaveReview.setVisibility(View.GONE);
@@ -112,7 +120,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             holder.tvStatus.setTextColor(android.graphics.Color.BLACK);
             holder.btnCancelAppt.setVisibility(View.VISIBLE);
             holder.btnRescheduleAppt.setVisibility(View.VISIBLE);
-            
+
             holder.btnCancelAppt.setOnClickListener(v -> listener.onCancel(appt));
             holder.btnRescheduleAppt.setOnClickListener(v -> listener.onReschedule(appt));
         } else {
@@ -127,8 +135,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
      * ViewHolder for appointment items in the history list.
      */
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCounselorName, tvDateTime, tvStatus, tvReviewSubmitted;
-        Button   btnLeaveReview, btnCancelAppt, btnRescheduleAppt;
+        TextView tvCounselorName, tvDateTime, tvStatus, tvReviewSubmitted, tvHistoryMaterials;        Button   btnLeaveReview, btnCancelAppt, btnRescheduleAppt;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -139,6 +146,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             btnLeaveReview    = itemView.findViewById(R.id.btnLeaveReview);
             btnCancelAppt     = itemView.findViewById(R.id.btnCancelAppt);
             btnRescheduleAppt = itemView.findViewById(R.id.btnRescheduleAppt);
+            tvHistoryMaterials = itemView.findViewById(R.id.tvHistoryMaterials);
         }
     }
 }

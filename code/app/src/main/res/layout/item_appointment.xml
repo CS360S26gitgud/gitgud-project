@@ -75,6 +75,25 @@
                 android:visibility="gone" />
 
         </LinearLayout>
+        <EditText
+            android:id="@+id/etMaterial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add resource (URL or note)"
+            android:layout_marginTop="8dp" />
 
+        <Button
+            android:id="@+id/btnAddMaterial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Material"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvMaterials"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:layout_marginTop="4dp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
