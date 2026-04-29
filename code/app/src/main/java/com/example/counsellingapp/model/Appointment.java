@@ -1,4 +1,7 @@
+
 package com.example.counsellingapp.model;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Represents a booked session between a student and a counselor.
  * Works as the 'appointments' in Firestore collection.
@@ -39,6 +42,8 @@ public class Appointment {
 
     /** Precise date and time for the scheduled session. */
     private com.google.firebase.Timestamp dateTime;
+    /** List of resource links or notes attached by the counselor. */
+    private List<String> materials = new ArrayList<>();
 
     /** * The resolved Student User object.
      * Resolved at runtime; not persisted to Firestore.
@@ -143,6 +148,8 @@ public class Appointment {
 
     /** @param dateTime The Firebase Timestamp to set for this appointment. */
     public void setDateTime(com.google.firebase.Timestamp dateTime) { this.dateTime = dateTime; }
+    public List<String> getMaterials() { return materials; }
+    public void setMaterials(List<String> materials) { this.materials = materials; }
 
     /** @return The resolved Student User object (not persisted) */
     public User getStudent(){
@@ -174,3 +181,5 @@ public class Appointment {
         this.timeSlot = timeSlot;
     }
 }
+
+

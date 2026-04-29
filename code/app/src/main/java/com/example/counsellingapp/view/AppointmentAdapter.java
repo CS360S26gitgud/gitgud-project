@@ -4,6 +4,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import java.util.ArrayList;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +60,34 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.tvDate.setText("Date: " + date);
         holder.tvTime.setText("Time: " + startTime + " – " + endTime);
         holder.tvStatus.setText("Status: " + appt.getStatus());
+        List<String> mats = appt.getMaterials();
+        if (mats != null && !mats.isEmpty()) {
+            holder.tvMaterials.setText("Materials:\n" + String.join("\n", mats));
+        } else {
+            holder.tvMaterials.setText("");
+        }
+
+        holder.btnAddMaterial.setOnClickListener(v -> {
+            String input = holder.etMaterial.getText().toString().trim();
+            if (input.isEmpty()) return;
+            List<String> updated = new ArrayList<>(mats != null ? mats : new ArrayList<>());
+            updated.add(input);
+            AppointmentController apptController = new AppointmentController();
+            apptController.addMaterialToAppointment(appt.getId(), updated,
+                    new AppointmentController.BookingCallback() {
+                        @Override
+                        public void onSuccess() {
+                            appt.setMaterials(updated);
+                            holder.etMaterial.setText("");
+                            notifyItemChanged(holder.getAdapterPosition());
+                        }
+                        @Override
+                        public void onFailure(Exception e) {
+                            Toast.makeText(holder.itemView.getContext(),
+                                    "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        });
 
         // Reset visibility
         holder.btnMarkCompleted.setVisibility(View.GONE);
@@ -79,8 +109,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     public int getItemCount() { return appointments.size(); }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvStudentName, tvDate, tvTime, tvStatus;
-        Button   btnMarkCompleted, btnCancel, btnReschedule;
+        TextView tvStudentName, tvDate, tvTime, tvStatus, tvMaterials;
+        Button   btnMarkCompleted, btnCancel, btnReschedule, btnAddMaterial;
+        EditText etMaterial;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -91,6 +122,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             btnMarkCompleted = itemView.findViewById(R.id.btnMarkCompleted);
             btnCancel        = itemView.findViewById(R.id.btnCancelByCounselor);
             btnReschedule    = itemView.findViewById(R.id.btnRescheduleByCounselor);
+            btnAddMaterial = itemView.findViewById(R.id.btnAddMaterial);
+            etMaterial     = itemView.findViewById(R.id.etMaterial);
+            tvMaterials    = itemView.findViewById(R.id.tvMaterials);
         }
     }
 }

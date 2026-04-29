@@ -181,8 +181,8 @@ public class AppointmentController {
                     return null;
                 }).addOnSuccessListener(v -> {
                     // US-08: Trigger local notification
-                    String msg = "Session scheduled with " + slot.getCounselorName() + 
-                                 " on " + slot.getDate() + " at " + slot.getStartTime();
+                    String msg = "Session scheduled with " + slot.getCounselorName() +
+                            " on " + slot.getDate() + " at " + slot.getStartTime();
                     NotificationHelper.sendNotification(context, "Appointment Booked", msg);
                     cb.onSuccess();
                 })
@@ -202,11 +202,11 @@ public class AppointmentController {
         com.google.firebase.firestore.DocumentReference slotRef = db.collection(COL_AVAILABILITY).document(timeslotId);
 
         db.runTransaction((com.google.firebase.firestore.Transaction.Function<Void>) transaction -> {
-            transaction.update(apptRef, "status", "cancelled");
-            transaction.update(slotRef, "booked", false);
-            return null;
-        }).addOnSuccessListener(v -> cb.onSuccess())
-          .addOnFailureListener(cb::onFailure);
+                    transaction.update(apptRef, "status", "cancelled");
+                    transaction.update(slotRef, "booked", false);
+                    return null;
+                }).addOnSuccessListener(v -> cb.onSuccess())
+                .addOnFailureListener(cb::onFailure);
     }
 
     /**
@@ -261,7 +261,7 @@ public class AppointmentController {
 
             // Create new appointment
             Appointment newAppt = new Appointment(
-                    newApptRef.getId(), oldAppt.getString("studentId"), 
+                    newApptRef.getId(), oldAppt.getString("studentId"),
                     newSlot.getCounselorId(), newSlot.getId(), "upcoming"
             );
             newAppt.setCounselorName(newSlot.getCounselorName());
@@ -302,7 +302,7 @@ public class AppointmentController {
 
             // Create new appointment
             Appointment newAppt = new Appointment(
-                    newApptRef.getId(), appt.getStudentId(), 
+                    newApptRef.getId(), appt.getStudentId(),
                     newSlot.getCounselorId(), newSlot.getId(), "upcoming"
             );
             newAppt.setCounselorName(newSlot.getCounselorName());
@@ -358,4 +358,25 @@ public class AppointmentController {
                 .addOnSuccessListener(v -> cb.onSuccess())
                 .addOnFailureListener(cb::onFailure);
     }
+    public void getStudentUpcomingAppointments(String studentId, AppointmentListCallback callback) {
+        db.collection(COL_APPOINTMENTS)
+                .whereEqualTo("studentId", studentId)
+                .whereEqualTo("status", "upcoming")
+                .get()
+                .addOnSuccessListener(snapshots -> {
+                    List<Appointment> appointments = snapshots.toObjects(Appointment.class);
+                    if (appointments.isEmpty()) { callback.onSuccess(appointments); return; }
+                    resolveCollaborators(appointments, callback);
+                })
+                .addOnFailureListener(callback::onFailure);
+    }
+
+    public void addMaterialToAppointment(String appointmentId, List<String> materials, BookingCallback cb) {
+        db.collection(COL_APPOINTMENTS)
+                .document(appointmentId)
+                .update("materials", materials)
+                .addOnSuccessListener(v -> cb.onSuccess())
+                .addOnFailureListener(cb::onFailure);
+    }
 }
+
