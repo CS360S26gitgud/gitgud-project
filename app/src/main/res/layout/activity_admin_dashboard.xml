@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F5F5F5">
+
+    <!-- Header row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Admin Dashboard"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#212121"/>
+
+        <Button
+            android:id="@+id/btnAdminLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:textSize="13sp"
+            android:backgroundTint="#F44336"/>
+    </LinearLayout>
+
+    <!-- Tab row: Students | Counselors -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:id="@+id/btnShowStudents"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Students"
+            android:layout_marginEnd="4dp"
+            android:backgroundTint="#1565C0"/>
+
+        <Button
+            android:id="@+id/btnShowCounselors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Counselors"
+            android:layout_marginStart="4dp"
+            android:backgroundTint="#4527A0"/>
+    </LinearLayout>
+
+    <!-- Section header + action button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/tvAdminSectionTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Students"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="#424242"/>
+
+        <!-- Visible when Students tab is active -->
+        <Button
+            android:id="@+id/btnCreateStudent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ Create Student"
+            android:textSize="13sp"
+            android:backgroundTint="#2E7D32"/>
+
+        <!-- Visible when Counselors tab is active -->
+        <Button
+            android:id="@+id/btnRegisterCounselor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ Register Counselor"
+            android:textSize="13sp"
+            android:backgroundTint="#6A1B9A"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <!-- Progress indicator -->
+    <ProgressBar
+        android:id="@+id/progressBarAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"/>
+
+    <!-- Empty state message -->
+    <TextView
+        android:id="@+id/tvAdminEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No records found."
+        android:textSize="15sp"
+        android:textColor="#757575"
+        android:gravity="center"
+        android:padding="24dp"
+        android:visibility="gone"/>
+
+    <!-- List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAdminList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"/>
+
+</LinearLayout>

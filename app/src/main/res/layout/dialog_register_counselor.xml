@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etDialogCounselorName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="12dp"
+        android:autofillHints="name"/>
+
+    <EditText
+        android:id="@+id/etDialogCounselorEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email Address"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="12dp"
+        android:autofillHints="emailAddress"/>
+
+    <EditText
+        android:id="@+id/etDialogCounselorPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Temporary Password (min. 6 characters)"
+        android:inputType="textPassword"
+        android:layout_marginBottom="12dp"
+        android:autofillHints="password"/>
+
+    <EditText
+        android:id="@+id/etDialogCounselorSpec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Specialization (optional — leave blank for General)"
+        android:inputType="textCapWords"/>
+
+</LinearLayout>
