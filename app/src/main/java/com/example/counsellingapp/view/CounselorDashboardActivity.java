@@ -20,6 +20,8 @@ import com.example.counsellingapp.model.Appointment;
 import com.example.counsellingapp.model.TimeSlot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import java.util.List;
 
@@ -59,9 +61,23 @@ public class CounselorDashboardActivity extends AppCompatActivity implements App
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            tvWelcome.setText("Welcome, " + user.getEmail());
+            // Fetch name from Firestore
+            FirebaseFirestore.getInstance().collection("counselors")
+                .document(user.getUid())
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        String name = doc.getString("name");
+                        tvWelcome.setText("Welcome, " + (name != null ? name : user.getEmail()));
+                    } else {
+                        tvWelcome.setText("Welcome, " + user.getEmail());
+                    }
+                })
+                .addOnFailureListener(e -> tvWelcome.setText("Welcome!"));
+
             loadAppointments(user.getUid());
         }
+
 
         btnSetAvailability.setOnClickListener(v ->
                 startActivity(new Intent(this, SetAvailabilityActivity.class)));

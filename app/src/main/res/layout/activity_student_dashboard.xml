@@ -1,122 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#F8F9FA">
+    android:background="#F8F9FA"
+    android:fillViewport="true">
 
-    <!-- Header Section -->
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome!"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="#212529"
-        android:layout_marginTop="8dp"/>
-
-    <TextView
-        android:id="@+id/tvRole"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Student Dashboard"
-        android:textSize="14sp"
-        android:textColor="#6C757D"
-        android:layout_marginBottom="24dp"/>
-
-    <!-- Next Appointment Card -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp"
-        app:cardBackgroundColor="@android:color/white">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Next Appointment"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#0D6EFD"/>
-
-            <TextView
-                android:id="@+id/tvNextApptDetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Checking schedule..."
-                android:textSize="14sp"
-                android:textColor="#6C757D"
-                android:layout_marginTop="4dp"/>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Action Buttons Container -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-        <!-- PRIMARY Button (Student -> Blue) -->
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome!"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#212529" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student Dashboard"
+            android:textSize="14sp"
+            android:textColor="#6C757D"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Next Appointment Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@android:color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Next Appointment"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#0D6EFD"/>
+
+                <TextView
+                    android:id="@+id/tvNextApptDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No upcoming sessions."
+                    android:textSize="14sp"
+                    android:textColor="#6C757D"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- US-09 Calendar Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@android:color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your Schedule"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#212529"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
+
+
+                <CalendarView
+                    android:id="@+id/calendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Main Navigation Buttons -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quick Actions"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#212529"
+            android:layout_marginBottom="12dp" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnViewSlots"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:text="Find Available Slots"
+            android:text="View Available Slots"
             android:textAllCaps="false"
             android:textSize="16sp"
             android:textStyle="bold"
             app:cornerRadius="12dp"
-            android:backgroundTint="#0D6EFD"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="12dp"
+            app:icon="@android:drawable/ic_menu_today"
+            android:backgroundTint="#0D6EFD" />
 
-        <!-- SECONDARY Buttons -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSearchCounselors"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="Search Counselors"
+            android:layout_height="64dp"
+            android:text="Find a Counselor"
             android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:cornerRadius="12dp"
-            app:strokeColor="#0D6EFD"
-            android:textColor="#0D6EFD"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp"
+            app:icon="@android:drawable/ic_menu_search"
+            android:backgroundTint="#0D6EFD" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAppointmentHistory"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="64dp"
             android:text="Appointment History"
             android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:cornerRadius="12dp"
-            app:strokeColor="#0D6EFD"
-            android:textColor="#0D6EFD"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="32dp"
+            app:icon="@android:drawable/ic_menu_recent_history"
+            android:backgroundTint="#6C757D" />
+
+        <!-- Logout Section -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log Out"
+            android:textColor="#DC3545"
+            android:layout_marginBottom="48dp" />
 
     </LinearLayout>
-
-    <!-- Logout at bottom -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogout"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Log Out"
-        android:textAllCaps="false"
-        android:textColor="#DC3545"
-        android:layout_marginBottom="8dp"/>
-
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

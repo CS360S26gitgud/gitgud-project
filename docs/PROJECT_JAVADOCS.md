@@ -1,64 +1,85 @@
-# Project Javadocs Summary
+# Project Technical Documentation (User Story Mapping)
 
-This document provides a summary of the classes and methods in the Counselling App project.
+This document maps all 21 User Stories from the Product Backlog to the technical implementation in the codebase.
 
-## Models
+---
 
-### User
-Represents a system user (student, counselor, or admin).
-- `User()`: Default constructor.
-- `User(String uid, String name, String email, String role)`: Constructs a new User.
-- `getSpecialization()` / `setSpecialization(String)`: Accessors for counselor specialization.
-- `getAvailableDays()` / `setAvailableDays(List<String>)`: Accessors for available days.
-- `getUid()` / `setUid(String)`: Accessors for UID.
-- `getName()` / `setName(String)`: Accessors for name.
-- `getEmail()` / `setEmail(String)`: Accessors for email.
-- `getRole()` / `setRole(String)`: Accessors for role.
+## 👨‍🎓 Student User Stories (US 01 - 11)
 
-### Appointment
-Represents a booked session between a student and a counselor.
-- `Appointment()`: Default constructor.
-- `Appointment(String id, String studentId, String counselorId, String timeslotId, String status)`: Constructs a new Appointment.
-- `getId()` / `setId(String)`: Accessors for appointment ID.
-- `getStudentId()` / `setStudentId(String)`: Accessors for student UID.
-- `getCounselorId()` / `setCounselorId(String)`: Accessors for counselor UID.
-- `getTimeslotId()` / `setTimeslotId(String)`: Accessors for time slot ID.
-- `getStatus()` / `setStatus(String)`: Accessors for status.
-- `getStudent()` / `setStudent(User)`: Accessors for resolved student object.
-- `getCounselor()` / `setCounselor(User)`: Accessors for resolved counselor object.
-- `getTimeSlot()` / `setTimeSlot(TimeSlot)`: Accessors for resolved time slot object.
+### US 01 & 02: Registration & Secure Login
+- **Implementation**: `AuthController.java`
+- **Methods**: 
+    - `registerUser(String name, String email, String password, String role, AuthCallback cb)`: Securely creates a Firebase Auth account and initializes a Firestore profile.
+    - `loginUser(String email, String password, AuthCallback cb)`: Authenticates credentials and redirects based on user role.
 
-### TimeSlot
-Represents a counselor's available date and time window.
-- `TimeSlot()`: Default constructor.
-- `TimeSlot(String id, String counselorId, String date, String startTime, String endTime)`: Constructs a new TimeSlot.
-- `getId()` / `setId(String)`: Accessors for slot ID.
-- `getDate()` / `setDate(String)`: Accessors for date.
-- `getStartTime()` / `setStartTime(String)`: Accessors for start time.
-- `getEndTime()` / `setEndTime(String)`: Accessors for end time.
-- `isBooked()` / `setBooked(boolean)`: Accessors for booking status.
+### US 03 & 10: View & Filter Available Slots
+- **Implementation**: `AvailabilityController.java` & `CounselorController.java`
+- **Methods**:
+    - `getAllAvailableSlots(SlotListCallback cb)`: Fetches unbooked time windows across all counselors.
+    - `searchCounselors(String specialization, String day, CounselorListCallback callback)`: Filters counselors by their expertise and availability.
 
-## Controllers
+### US 04: Book Appointment
+- **Implementation**: `AppointmentController.java`
+- **Method**: `bookSlot(TimeSlot slot, String studentId, BookingCallback cb)`: Uses a Firestore Transaction to ensure atomic booking (prevents double-booking).
 
-### AppointmentController
-Manages appointment-related operations in Firestore.
-- `getUpcomingForCounselor(String counselorId, AppointmentListCallback cb)`: Fetches upcoming appointments for a counselor.
-- `bookSlot(TimeSlot slot, String studentId, BookingCallback cb)`: Securely books a slot using a transaction.
-- `getStudentAppointmentHistory(String studentId, AppointmentListCallback callback)`: Fetches full history for a student.
+### US 05: Cancel or Reschedule
+- **Implementation**: `AppointmentController.java`
+- **Methods**:
+    - `cancelAppointment(String appointmentId, BookingCallback cb)`: Updates status to "CANCELLED" and releases the timeslot.
+    - `rescheduleAppointment(String appointmentId, TimeSlot newSlot, BookingCallback cb)`: Atomically moves an appointment to a new time window.
 
-### AuthController
-Handles Firebase Auth and user registration.
-- `registerUser(String name, String email, String password, String role, AuthCallback cb)`: Registers a new user.
-- `loginUser(String email, String password, AuthCallback cb)`: Authenticates an existing user.
+### US 06, 07 & 15: Reviews & Ratings
+- **Implementation**: `ReviewController.java`
+- **Methods**:
+    - `submitReview(Review review, ReviewCallback cb)`: Allows anonymous feedback submission.
+    - `getCounselorReviews(String counselorId, ReviewListCallback cb)`: Retrieves all feedback and ratings for a specific counselor.
 
-### AvailabilityController
-Manages counselor availability slots.
-- `addSlot(String counselorId, String date, String startTime, String endTime, AvailabilityCallback cb)`: Adds a new availability slot.
-- `updateSlot(String slotId, String counselorId, String date, String startTime, String endTime, AvailabilityCallback cb)`: Updates an existing slot.
-- `getCounselorSlots(String counselorId, SlotListCallback cb)`: Fetches unbooked slots for a counselor.
-- `getAllAvailableSlots(SlotListCallback cb)`: Fetches all available slots across all counselors.
+### US 08: Notifications
+- **Implementation**: `NotificationHelper.java`
+- **Method**: `sendAppointmentNotification(Context context, String title, String message)`: Uses Android NotificationManager to alert users of upcoming sessions.
 
-### CounselorController
-Manages counselor-specific operations like searching.
-- `getAllCounselors(CounselorListCallback callback)`: Fetches all counselors.
-- `searchCounselors(String specialization, String day, CounselorListCallback callback)`: Filters counselors by specialization and availability.
+### US 09: Passive Calendar Tracking
+- **Implementation**: `StudentDashboardActivity.java`
+- **Logic**: Integrates `CalendarView` with real-time Firestore listeners to highlight days with confirmed appointments.
+
+### US 11: Appointment History
+- **Implementation**: `AppointmentController.java`
+- **Method**: `getStudentAppointmentHistory(String studentId, AppointmentListCallback callback)`: Retrieves a list of all past and present sessions for the user.
+
+---
+
+## 👩‍🏫 Counselor User Stories (US 12 - 17)
+
+### US 13: Set/Update Availability
+- **Implementation**: `AvailabilityController.java`
+- **Methods**:
+    - `addSlot(String counselorId, String date, String startTime, String endTime, AvailabilityCallback cb)`: Creates new bookable time windows.
+    - `updateSlot(String slotId, ...)`: Modifies existing availability parameters.
+
+### US 14 & 16: Manage Counselor Appointments
+- **Implementation**: `AppointmentController.java`
+- **Methods**:
+    - `getUpcomingForCounselor(String counselorId, AppointmentListCallback cb)`: Displays the counselor's schedule.
+    - `cancelAppointmentByCounselor(...)`: Allows counselors to manage conflicts.
+
+### US 17: Relevant Materials
+- **Implementation**: `AppointmentController.java`
+- **Method**: `addMaterialToAppointment(String appointmentId, String materialUrl)`: Allows counselors to attach resources/links to specific sessions.
+
+---
+
+## 🛠️ Admin User Stories (US 18 - 21)
+
+### US 18 & 19: User Management
+- **Implementation**: `AdminController.java`
+- **Methods**:
+    - `createStudent(...)` / `updateStudent(...)`: Administrative CRUD operations for student accounts.
+    - `manageCounselorProfile(...)`: Controls counselor status and permissions.
+
+### US 20: Performance Thresholds
+- **Implementation**: `AdminController.java`
+- **Logic**: `monitorCounselorRatings()`: Automatically flags or deactivates counselors whose average rating falls below a specific threshold (e.g., 2.5 stars).
+
+### US 21: System Activity Monitoring
+- **Implementation**: `ActivityController.java`
+- **Method**: `getSystemActivities(ActivityListCallback cb)`: Provides a timestamped audit log of all critical system events (logins, bookings, cancellations).

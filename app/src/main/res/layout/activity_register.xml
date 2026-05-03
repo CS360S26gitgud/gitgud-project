@@ -98,40 +98,6 @@
                             android:inputType="textPassword" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Role Selection -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="I am registering as a:"
-                        android:textColor="#212529"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="8dp"
-                        android:textStyle="bold" />
-
-                    <RadioGroup
-                        android:id="@+id/rgRole"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="24dp">
-
-                        <RadioButton
-                            android:id="@+id/rbStudent"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Student"
-                            android:buttonTint="#6200EE"/>
-
-                        <RadioButton
-                            android:id="@+id/rbCounselor"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Counselor"
-                            android:buttonTint="#6200EE"/>
-                    </RadioGroup>
-
                     <!-- Register Button -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnRegister"

@@ -1,0 +1,713 @@
+app/src/main/java/com/example/counsellingapp/MainActivity.java:public class MainActivity extends AppCompatActivity {
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:/**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java: */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:public class AdminController {
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public interface AdminCallback {
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:        /** Called when the operation completes successfully. */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:        /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:         */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public interface StudentListCallback {
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:        /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:         */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:        /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:         */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public interface CounselorListCallback {
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:        /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:         */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:        /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:         */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public void createStudent(String name, String email, String password, AdminCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public void updateStudent(String uid, String name, String email, AdminCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public void setStudentActive(String uid, boolean active, AdminCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public void getAllStudents(StudentListCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public void registerCounselor(String name, String email, String password,
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public void setCounselorApproved(String counselorId, boolean approved, AdminCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public void updateCounselor(String counselorId, String name, String email,
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public void getAllCounselors(CounselorListCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AdminController.java:    public void clearCounselorSuspension(String counselorId, AdminCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:/**
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java: */
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:public class CounselorController {
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:    public interface CounselorListCallback {
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:        /**
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:         */
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:        /**
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:         */
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:    public void getAllCounselors(CounselorListCallback callback) {
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/CounselorController.java:    public void searchCounselors(String specialization, String day,
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:/**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java: */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:public class AvailabilityController {
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    public interface SlotListCallback {
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:        /**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:         */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:        /**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:         */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    public interface BookingCallback {
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:        /** Called when the write completes successfully. */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:        /**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:         */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    public void addSlot(String counselorId, String date,
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    public void updateSlot(String slotId, String counselorId, String date,
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    public void getCounselorSlots(String counselorId, SlotListCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    public void getAllAvailableSlots(SlotListCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AuthCallback.java:/**
+app/src/main/java/com/example/counsellingapp/controller/AuthCallback.java: */
+app/src/main/java/com/example/counsellingapp/controller/AuthCallback.java:public interface AuthCallback {
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:/**
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java: */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:public class AppointmentController {
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public interface AppointmentListCallback {
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public interface BookingCallback {
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public void getUpcomingForCounselor(String counselorId, AppointmentListCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public void getStudentAppointmentHistory(String studentId, AppointmentListCallback callback) {
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public void bookSlot(Context context, TimeSlot slot, String studentId, BookingCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /** Student cancels an appointment and frees the timeslot. */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public void cancelAppointment(String appointmentId, String timeslotId, BookingCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /** Counselor cancels an appointment and notifies the student. */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public void cancelAppointmentByCounselor(Context context, Appointment appt, BookingCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /** Student reschedules an appointment to a new timeslot. */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public void rescheduleAppointment(Context context, String appointmentId,
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /** Counselor reschedules an appointment and notifies the student. */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public void rescheduleAppointmentByCounselor(Context context, Appointment appt,
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public void markAsCompleted(String appointmentId, BookingCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public void getStudentUpcomingAppointments(String studentId, AppointmentListCallback callback) {
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AppointmentController.java:    public void addMaterialToAppointment(String appointmentId, List<String> materials, BookingCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/NotificationHelper.java:/**
+app/src/main/java/com/example/counsellingapp/controller/NotificationHelper.java: */
+app/src/main/java/com/example/counsellingapp/controller/NotificationHelper.java:public class NotificationHelper {
+app/src/main/java/com/example/counsellingapp/controller/NotificationHelper.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/NotificationHelper.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AuthController.java:/**
+app/src/main/java/com/example/counsellingapp/controller/AuthController.java: */
+app/src/main/java/com/example/counsellingapp/controller/AuthController.java:public class AuthController {
+app/src/main/java/com/example/counsellingapp/controller/AuthController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AuthController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AuthController.java:    public void registerUser(String name, String email, String password, AuthCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AuthController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AuthController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/AuthController.java:    public void loginUser(String email, String password, AuthCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AuthController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/AuthController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/ActivityController.java:/**
+app/src/main/java/com/example/counsellingapp/controller/ActivityController.java: */
+app/src/main/java/com/example/counsellingapp/controller/ActivityController.java:public class ActivityController {
+app/src/main/java/com/example/counsellingapp/controller/ActivityController.java:    public interface ActivityListCallback {
+app/src/main/java/com/example/counsellingapp/controller/ActivityController.java:    public interface SimpleCallback {
+app/src/main/java/com/example/counsellingapp/controller/ActivityController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/ActivityController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/ActivityController.java:    public void logActivity(String type, String description, String initiatorName) {
+app/src/main/java/com/example/counsellingapp/controller/ActivityController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/ActivityController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/ActivityController.java:    public void getRecentActivities(int limit, ActivityListCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:/**
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java: */
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:public class ReviewController {
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:    public interface SimpleCallback {
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:    public interface ReviewListCallback {
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:    public interface ReviewedIdsCallback {
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:    public void submitReview(Review review, SimpleCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:    public void getReviewsForCounselor(String counselorId, ReviewListCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:    /**
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:     */
+app/src/main/java/com/example/counsellingapp/controller/ReviewController.java:    public void getReviewedAppointmentIds(List<String> appointmentIds, ReviewedIdsCallback cb) {
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityCallback.java:/**
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityCallback.java: */
+app/src/main/java/com/example/counsellingapp/controller/AvailabilityCallback.java:public interface AvailabilityCallback {
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:/**
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java: */
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:public class SystemActivity {
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    /** Unique ID of the activity document in Firestore. */
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    /** Category of event (e.g., BOOKING, CANCELLATION, APPROVAL). */
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    /** Human-readable description of the event. */
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    /** Name of the user (or "System") who triggered the event. */
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    /** Server-side timestamp when the event was logged. */
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public SystemActivity() {} // Required for Firestore
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public SystemActivity(String type, String description, String initiatorName) {
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public String getId() { return id; }
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public void setId(String id) { this.id = id; }
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public String getType() { return type; }
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public void setType(String type) { this.type = type; }
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public String getDescription() { return description; }
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public void setDescription(String description) { this.description = description; }
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public String getInitiatorName() { return initiatorName; }
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public void setInitiatorName(String initiatorName) { this.initiatorName = initiatorName; }
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public Timestamp getTimestamp() { return timestamp; }
+app/src/main/java/com/example/counsellingapp/model/SystemActivity.java:    public void setTimestamp(Timestamp timestamp) { this.timestamp = timestamp; }
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:/**
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java: */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:public class TimeSlot {
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** Unique identifier for the time slot record in Firestore. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** The unique ID of the counselor who owns this availability window. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** The date of the availability, formatted as "YYYY-MM-DD". */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** The start time of the slot, formatted as "HH:mm" (24-hour clock). */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** The end time of the slot, formatted as "HH:mm" (24-hour clock). */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** Flag indicating whether this specific slot has been reserved by a student. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** * The display name of the counselor. 
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:     */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /**
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:     */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public TimeSlot() {}//empty constructor for Firestore deserialization
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /**
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:     */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public TimeSlot(String id, String counselorId, String date, String startTime, String endTime) {
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @return The unique Firestore document ID. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public String getId() { return id; }
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @param id The unique Firestore document ID to set. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public void setId(String id) { this.id = id; }
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @return The ID of the associated counselor. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public String getCounselorId() { return counselorId; }
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @param counselorId The ID of the associated counselor to set. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public void setCounselorId(String counselorId) { this.counselorId = counselorId; }
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @return The date string in "YYYY-MM-DD" format. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public String getDate() { return date; }
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @param date The date string to set (expected: "YYYY-MM-DD"). */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public void setDate(String date) {this.date = date;}
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @return The start time string in "HH:mm" format. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public String getStartTime(){return startTime;}
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @param startTime The start time to set (expected: "HH:mm"). */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public void setStartTime(String startTime){this.startTime = startTime;}
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @return The end time string in "HH:mm" format. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public String getEndTime(){return endTime;}
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @param endTime The end time to set (expected: "HH:mm"). */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public void setEndTime(String endTime){this.endTime = endTime;}
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @return True if the slot is already booked, false otherwise. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @param b The booking status to set. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public void setBooked(boolean b){this.booked = b;}
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** * @return The counselor's display name. 
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:     */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public String getCounselorName() {return counselorName;}
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    /** @param name The counselor's display name to set for transient use. */
+app/src/main/java/com/example/counsellingapp/model/TimeSlot.java:    public void setCounselorName(String name) {this.counselorName = name;}
+app/src/main/java/com/example/counsellingapp/model/Review.java:/**
+app/src/main/java/com/example/counsellingapp/model/Review.java: */
+app/src/main/java/com/example/counsellingapp/model/Review.java:public class Review {
+app/src/main/java/com/example/counsellingapp/model/Review.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Review.java:     */
+app/src/main/java/com/example/counsellingapp/model/Review.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Review.java:     */
+app/src/main/java/com/example/counsellingapp/model/Review.java:    /** Star rating provided by the student, between 1.0 and 5.0. */
+app/src/main/java/com/example/counsellingapp/model/Review.java:    /** Optional written comment. May be empty but never null after Firestore round-trip. */
+app/src/main/java/com/example/counsellingapp/model/Review.java:    /** Server-side timestamp of submission — used for display ordering. */
+app/src/main/java/com/example/counsellingapp/model/Review.java:    /** Required for Firestore automatic deserialization. */
+app/src/main/java/com/example/counsellingapp/model/Review.java:    public Review() {}
+app/src/main/java/com/example/counsellingapp/model/Review.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Review.java:     */
+app/src/main/java/com/example/counsellingapp/model/Review.java:    public Review(String id, String counselorId, float rating, String comment, Timestamp timestamp) {
+app/src/main/java/com/example/counsellingapp/model/Review.java:    public String getId() { return id; }
+app/src/main/java/com/example/counsellingapp/model/Review.java:    public void setId(String id) { this.id = id; }
+app/src/main/java/com/example/counsellingapp/model/Review.java:    public String getCounselorId() { return counselorId; }
+app/src/main/java/com/example/counsellingapp/model/Review.java:    public void setCounselorId(String counselorId) { this.counselorId = counselorId; }
+app/src/main/java/com/example/counsellingapp/model/Review.java:    public void setRating(float rating) { this.rating = rating; }
+app/src/main/java/com/example/counsellingapp/model/Review.java:    public String getComment() { return comment; }
+app/src/main/java/com/example/counsellingapp/model/Review.java:    public void setComment(String comment) { this.comment = comment; }
+app/src/main/java/com/example/counsellingapp/model/Review.java:    public Timestamp getTimestamp() { return timestamp; }
+app/src/main/java/com/example/counsellingapp/model/Review.java:    public void setTimestamp(Timestamp timestamp) { this.timestamp = timestamp; }
+app/src/main/java/com/example/counsellingapp/model/Admin.java:/**
+app/src/main/java/com/example/counsellingapp/model/Admin.java: */
+app/src/main/java/com/example/counsellingapp/model/Admin.java:public class Admin extends User {
+app/src/main/java/com/example/counsellingapp/model/Admin.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Admin.java:     */
+app/src/main/java/com/example/counsellingapp/model/Admin.java:    public Admin() {}
+app/src/main/java/com/example/counsellingapp/model/Admin.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Admin.java:     */
+app/src/main/java/com/example/counsellingapp/model/Admin.java:    public Admin(String uid, String name, String email) {
+app/src/main/java/com/example/counsellingapp/model/Admin.java:    public String getRole() {
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:/**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java: */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:public class Appointment {
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** Unique identifier for this appointment record in Firestore. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** List of resource links or notes attached by the counselor for this session. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** Precise date and time of the scheduled session as a Firebase Timestamp. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public Appointment() {}
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public Appointment(String id, String studentId, String counselorId,
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @return The unique Firestore document ID for this appointment. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public String getId() { return id; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @param id The Firestore document ID to assign. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public void setId(String id) { this.id = id; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @return The UID of the student participant. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public String getStudentId() { return studentId; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @param studentId The student's Firebase UID to assign. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public void setStudentId(String studentId) { this.studentId = studentId; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @return The UID of the counselor participant. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public String getCounselorId() { return counselorId; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @param counselorId The counselor's Firebase UID to assign. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public void setCounselorId(String counselorId) { this.counselorId = counselorId; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @return The Firestore document ID of the selected {@link TimeSlot}. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public String getTimeslotId() { return timeslotId; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @param timeslotId The time slot ID to assign. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public void setTimeslotId(String timeslotId) { this.timeslotId = timeslotId; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public String getStatus() { return status; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @param status The new status value to assign. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public void setStatus(String status) { this.status = status; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @return The denormalized counselor display name stored at booking time. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public String getCounselorName() { return counselorName; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @param counselorName The denormalized counselor name to store. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public void setCounselorName(String counselorName) { this.counselorName = counselorName; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @return The Firebase Timestamp of the scheduled session. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @param dateTime The session timestamp to assign. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public void setDateTime(com.google.firebase.Timestamp dateTime) { this.dateTime = dateTime; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @return The list of resource links or notes attached by the counselor. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public List<String> getMaterials() { return materials; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /** @param materials The updated list of resources to attach to this appointment. */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public void setMaterials(List<String> materials) { this.materials = materials; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public Student getStudent() { return student; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public void setStudent(Student student) { this.student = student; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public Counselor getCounselor() { return counselor; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public void setCounselor(Counselor counselor) { this.counselor = counselor; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public TimeSlot getTimeSlot() { return timeSlot; }
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:     */
+app/src/main/java/com/example/counsellingapp/model/Appointment.java:    public void setTimeSlot(TimeSlot timeSlot) { this.timeSlot = timeSlot; }
+app/src/main/java/com/example/counsellingapp/model/User.java:/**
+app/src/main/java/com/example/counsellingapp/model/User.java: */
+app/src/main/java/com/example/counsellingapp/model/User.java:    /** Unique identifier provided by Firebase Authentication. */
+app/src/main/java/com/example/counsellingapp/model/User.java:    /** Full display name of the user. */
+app/src/main/java/com/example/counsellingapp/model/User.java:    /** Primary email address associated with the account. */
+app/src/main/java/com/example/counsellingapp/model/User.java:    /**
+app/src/main/java/com/example/counsellingapp/model/User.java:     */
+app/src/main/java/com/example/counsellingapp/model/User.java:    public User() {}
+app/src/main/java/com/example/counsellingapp/model/User.java:    /**
+app/src/main/java/com/example/counsellingapp/model/User.java:     */
+app/src/main/java/com/example/counsellingapp/model/User.java:    public User(String uid, String name, String email) {
+app/src/main/java/com/example/counsellingapp/model/User.java:    /**
+app/src/main/java/com/example/counsellingapp/model/User.java:     */
+app/src/main/java/com/example/counsellingapp/model/User.java:    /** @return The unique Firebase Authentication UID. */
+app/src/main/java/com/example/counsellingapp/model/User.java:    public String getUid() { return uid; }
+app/src/main/java/com/example/counsellingapp/model/User.java:    /** @param uid The Firebase UID to assign. */
+app/src/main/java/com/example/counsellingapp/model/User.java:    public void setUid(String uid) { this.uid = uid; }
+app/src/main/java/com/example/counsellingapp/model/User.java:    /** @return The user's full display name. */
+app/src/main/java/com/example/counsellingapp/model/User.java:    public String getName() { return name; }
+app/src/main/java/com/example/counsellingapp/model/User.java:    /** @param name The display name to assign. */
+app/src/main/java/com/example/counsellingapp/model/User.java:    public void setName(String name) { this.name = name; }
+app/src/main/java/com/example/counsellingapp/model/User.java:    /** @return The user's registered email address. */
+app/src/main/java/com/example/counsellingapp/model/User.java:    public String getEmail() { return email; }
+app/src/main/java/com/example/counsellingapp/model/User.java:    /** @param email The email address to assign. */
+app/src/main/java/com/example/counsellingapp/model/User.java:    public void setEmail(String email) { this.email = email; }
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:/**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java: */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:public class Counselor extends User {
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public Counselor() {}
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public Counselor(String uid, String name, String email,
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public String getRole() {
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /** @return The counselor's area of expertise, or {@code null} if general practice. */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public String getSpecialization() { return specialization; }
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /** @param specialization The specialization to assign; {@code null} for general practice. */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public void setSpecialization(String specialization) { this.specialization = specialization; }
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /** @return List of full English day names on which the counselor has available slots. */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public List<String> getAvailableDays() { return availableDays; }
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /** @param availableDays The day list to assign. Maintained by {@code AvailabilityController}. */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public void setAvailableDays(List<String> availableDays) { this.availableDays = availableDays; }
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public void setApproved(boolean approved) { this.approved = approved; }
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /** @param averageRating The new average rating value. Managed by {@code ReviewController}. */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public void setAverageRating(float averageRating) { this.averageRating = averageRating; }
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /** @return Total number of reviews contributing to {@link #averageRating}. */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /** @param reviewCount The new review count. Managed by {@code ReviewController}. */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public void setReviewCount(int reviewCount) { this.reviewCount = reviewCount; }
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public void setSuspended(boolean suspended) { this.suspended = suspended; }
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:     */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    /** @param meetingCleared {@code true} to signal meeting complete; reset to {@code false} after use. */
+app/src/main/java/com/example/counsellingapp/model/Counselor.java:    public void setMeetingCleared(boolean meetingCleared) { this.meetingCleared = meetingCleared; }
+app/src/main/java/com/example/counsellingapp/model/Student.java:/**
+app/src/main/java/com/example/counsellingapp/model/Student.java: */
+app/src/main/java/com/example/counsellingapp/model/Student.java:public class Student extends User {
+app/src/main/java/com/example/counsellingapp/model/Student.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Student.java:     */
+app/src/main/java/com/example/counsellingapp/model/Student.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Student.java:     */
+app/src/main/java/com/example/counsellingapp/model/Student.java:    public Student() {}
+app/src/main/java/com/example/counsellingapp/model/Student.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Student.java:     */
+app/src/main/java/com/example/counsellingapp/model/Student.java:    public Student(String uid, String name, String email) {
+app/src/main/java/com/example/counsellingapp/model/Student.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Student.java:     */
+app/src/main/java/com/example/counsellingapp/model/Student.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Student.java:     */
+app/src/main/java/com/example/counsellingapp/model/Student.java:    public String getRole() { return "student"; }
+app/src/main/java/com/example/counsellingapp/model/Student.java:    /**
+app/src/main/java/com/example/counsellingapp/model/Student.java:     */
+app/src/main/java/com/example/counsellingapp/model/Student.java:    public void setActive(boolean active) { this.active = active; }
+app/src/main/java/com/example/counsellingapp/model/Constants.java:/**
+app/src/main/java/com/example/counsellingapp/model/Constants.java: */
+app/src/main/java/com/example/counsellingapp/model/Constants.java:public class Constants {
+app/src/main/java/com/example/counsellingapp/view/StudentDashboardActivity.java:/**
+app/src/main/java/com/example/counsellingapp/view/StudentDashboardActivity.java: */
+app/src/main/java/com/example/counsellingapp/view/StudentDashboardActivity.java:public class StudentDashboardActivity extends AppCompatActivity {
+app/src/main/java/com/example/counsellingapp/view/StudentDashboardActivity.java:                        public void onSuccess(List<Appointment> appointments) {
+app/src/main/java/com/example/counsellingapp/view/StudentDashboardActivity.java:                        public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/ReviewAdapter.java:/**
+app/src/main/java/com/example/counsellingapp/view/ReviewAdapter.java: */
+app/src/main/java/com/example/counsellingapp/view/ReviewAdapter.java:public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
+app/src/main/java/com/example/counsellingapp/view/ReviewAdapter.java:    public ReviewAdapter(List<Review> reviews) {
+app/src/main/java/com/example/counsellingapp/view/ReviewAdapter.java:    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+app/src/main/java/com/example/counsellingapp/view/ReviewAdapter.java:    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:/**
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java: */
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:public class AppointmentHistoryActivity extends AppCompatActivity implements HistoryAdapter.OnAppointmentInteractionListener {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:                    public void onSuccess(List<Appointment> appointments) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:                                    public void onSuccess(Set<String> reviewedIds) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:                                    public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:                    public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:    public void onCancel(Appointment appt) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:                        public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:                        public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:    public void onReschedule(Appointment appt) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:            public void onSuccess(List<TimeSlot> slots) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:            public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/AppointmentHistoryActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:/**
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java: */
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:public class AdminStudentAdapter
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:    public interface OnEditStudentListener {
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:        /**
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:         */
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:    public interface OnToggleActiveListener {
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:        /**
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:         */
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:    public AdminStudentAdapter(List<Student> students,
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:    /** @return The number of students in the adapter list. */
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:        /**
+app/src/main/java/com/example/counsellingapp/view/AdminStudentAdapter.java:         */
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:/**
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java: */
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:public class CounselorDashboardActivity extends AppCompatActivity implements AppointmentAdapter.OnAppointmentActionListener {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:                    public void onSuccess(List<Appointment> appointments) {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:                    public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:    public void onCancel(Appointment appointment) {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:                        public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:                        public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:    public void onReschedule(Appointment appointment) {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:            public void onSuccess(List<TimeSlot> slots) {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:                        public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:                        public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:    public void onComplete(Appointment appointment) {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:            public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/CounselorDashboardActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:/**
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java: */
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:    public interface OnAppointmentInteractionListener {
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:        /**
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:         */
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:        /**
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:         */
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:    public HistoryAdapter(List<Appointment> appointments, Set<String> reviewedIds, OnAppointmentInteractionListener listener) {
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/HistoryAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/SetAvailabilityActivity.java:/**
+app/src/main/java/com/example/counsellingapp/view/SetAvailabilityActivity.java: */
+app/src/main/java/com/example/counsellingapp/view/SetAvailabilityActivity.java:public class SetAvailabilityActivity extends AppCompatActivity {
+app/src/main/java/com/example/counsellingapp/view/SetAvailabilityActivity.java:                    public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/SetAvailabilityActivity.java:                    public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsAdapter.java:public class AvailableSlotsAdapter extends RecyclerView.Adapter<AvailableSlotsAdapter.SlotViewHolder> {
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsAdapter.java:    public interface OnSlotBookClickListener {
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsAdapter.java:    public AvailableSlotsAdapter(List<TimeSlot> slots, OnSlotBookClickListener listener) {
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsAdapter.java:    public SlotViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsAdapter.java:    public void onBindViewHolder(@NonNull SlotViewHolder holder, int position) {
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsAdapter.java:    public void updateData(List<TimeSlot> newSlots) {
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsAdapter.java:        public SlotViewHolder(@NonNull View itemView) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:/**
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java: */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:public class AdminDashboardActivity extends AppCompatActivity {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:    /** Tracks which section is currently displayed: {@code "students"}, {@code "counselors"}, or {@code "logs"}. */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:            public void onSuccess(List<Student> students) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                @Override public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                @Override public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                @Override public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                @Override public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                    @Override public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                    @Override public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:            public void onSuccess(List<Counselor> counselors) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                @Override public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                @Override public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                @Override public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                @Override public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                    @Override public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                    @Override public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                    @Override public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:                                    @Override public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:            public void onSuccess(List<SystemActivity> activities) {
+app/src/main/java/com/example/counsellingapp/view/AdminDashboardActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentAdapter.java:/**
+app/src/main/java/com/example/counsellingapp/view/AppointmentAdapter.java: */
+app/src/main/java/com/example/counsellingapp/view/AppointmentAdapter.java:public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.ViewHolder> {
+app/src/main/java/com/example/counsellingapp/view/AppointmentAdapter.java:    public interface OnAppointmentActionListener {
+app/src/main/java/com/example/counsellingapp/view/AppointmentAdapter.java:    public AppointmentAdapter(List<Appointment> appointments, OnAppointmentActionListener listener) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentAdapter.java:    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentAdapter.java:    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+app/src/main/java/com/example/counsellingapp/view/AppointmentAdapter.java:                        public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/AppointmentAdapter.java:                        public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/RegisterActivity.java:/**
+app/src/main/java/com/example/counsellingapp/view/RegisterActivity.java: */
+app/src/main/java/com/example/counsellingapp/view/RegisterActivity.java:public class RegisterActivity extends AppCompatActivity {
+app/src/main/java/com/example/counsellingapp/view/RegisterActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/RegisterActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/RegisterActivity.java:            public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/RegisterActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/LoginActivity.java:/**
+app/src/main/java/com/example/counsellingapp/view/LoginActivity.java: */
+app/src/main/java/com/example/counsellingapp/view/LoginActivity.java:public class LoginActivity extends AppCompatActivity {
+app/src/main/java/com/example/counsellingapp/view/LoginActivity.java:            public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/LoginActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/LandingActivity.java:/**
+app/src/main/java/com/example/counsellingapp/view/LandingActivity.java: */
+app/src/main/java/com/example/counsellingapp/view/LandingActivity.java:public class LandingActivity extends AppCompatActivity {
+app/src/main/java/com/example/counsellingapp/view/LandingActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/LandingActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/LandingActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/LandingActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/LandingActivity.java:    /**
+app/src/main/java/com/example/counsellingapp/view/LandingActivity.java:     */
+app/src/main/java/com/example/counsellingapp/view/SubmitReviewActivity.java:/**
+app/src/main/java/com/example/counsellingapp/view/SubmitReviewActivity.java: */
+app/src/main/java/com/example/counsellingapp/view/SubmitReviewActivity.java:public class SubmitReviewActivity extends AppCompatActivity {
+app/src/main/java/com/example/counsellingapp/view/SubmitReviewActivity.java:            public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/SubmitReviewActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/ActivityLogAdapter.java:/**
+app/src/main/java/com/example/counsellingapp/view/ActivityLogAdapter.java: */
+app/src/main/java/com/example/counsellingapp/view/ActivityLogAdapter.java:public class ActivityLogAdapter extends RecyclerView.Adapter<ActivityLogAdapter.ViewHolder> {
+app/src/main/java/com/example/counsellingapp/view/ActivityLogAdapter.java:    public ActivityLogAdapter(List<SystemActivity> activities) {
+app/src/main/java/com/example/counsellingapp/view/ActivityLogAdapter.java:    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+app/src/main/java/com/example/counsellingapp/view/ActivityLogAdapter.java:    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+app/src/main/java/com/example/counsellingapp/view/CounselorReviewsActivity.java:/**
+app/src/main/java/com/example/counsellingapp/view/CounselorReviewsActivity.java: */
+app/src/main/java/com/example/counsellingapp/view/CounselorReviewsActivity.java:public class CounselorReviewsActivity extends AppCompatActivity {
+app/src/main/java/com/example/counsellingapp/view/CounselorReviewsActivity.java:            public void onSuccess(List<Review> reviews) {
+app/src/main/java/com/example/counsellingapp/view/CounselorReviewsActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:/**
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java: */
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:public class CounselorAdapter extends RecyclerView.Adapter<CounselorAdapter.ViewHolder> {
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:    public CounselorAdapter(List<Counselor> counselors) {
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:    /** @return The number of counselors in the adapter list. */
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:        /**
+app/src/main/java/com/example/counsellingapp/view/CounselorAdapter.java:         */
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsActivity.java:public class AvailableSlotsActivity extends AppCompatActivity {
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsActivity.java:            public void onSuccess(List<TimeSlot> slots) {
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsActivity.java:            public void onSuccess() {
+app/src/main/java/com/example/counsellingapp/view/AvailableSlotsActivity.java:            public void onFailure(Exception e) {
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:/**
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java: */
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:public class AdminCounselorAdapter
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    /** Listener for edit actions on a counselor row. */
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    public interface OnEditCounselorListener {
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    /** Listener for approve/revoke toggle actions on a counselor row. */
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    public interface OnToggleApprovalListener {
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    /** Listener for clearing a suspension on a suspended counselor row. */
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    public interface OnClearSuspensionListener {
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    public AdminCounselorAdapter(List<Counselor> counselors,
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    /**
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:     */
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+app/src/main/java/com/example/counsellingapp/view/AdminCounselorAdapter.java:    /** ViewHolder for a single counselor management card. */
+app/src/main/java/com/example/counsellingapp/view/CounselorSearchActivity.java:/**
+app/src/main/java/com/example/counsellingapp/view/CounselorSearchActivity.java: */
+app/src/main/java/com/example/counsellingapp/view/CounselorSearchActivity.java:public class CounselorSearchActivity extends AppCompatActivity {
+app/src/main/java/com/example/counsellingapp/view/CounselorSearchActivity.java:            public void onSuccess(List<Counselor> counselors) {   // was List<User> — now correct
+app/src/main/java/com/example/counsellingapp/view/CounselorSearchActivity.java:            public void onFailure(Exception e) {

@@ -1,55 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center">
+    android:background="#F8F9FA"
+    android:padding="24dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set Availability"
-        android:textSize="22sp"
+        android:text="Update Availability"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginBottom="32dp" />
+        android:textColor="#212529" />
 
-    <!-- Date picker trigger -->
-    <Button
-        android:id="@+id/btnPickDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pick Date"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Start time picker trigger -->
-    <Button
-        android:id="@+id/btnPickStartTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pick Start Time"
-        android:layout_marginBottom="16dp" />
-
-    <!-- End time picker trigger -->
-    <Button
-        android:id="@+id/btnPickEndTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pick End Time"
-        android:layout_marginBottom="24dp" />
-
-    <ProgressBar
-        android:id="@+id/progressBarAvailability"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone"
-        android:layout_marginBottom="8dp" />
+        android:text="Define your next available counseling slot."
+        android:textSize="14sp"
+        android:textColor="#6C757D"
+        android:layout_marginBottom="32dp" />
 
-    <Button
-        android:id="@+id/btnSaveSlot"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Slot" />
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#495057"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPickDate"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Select Date"
+                android:textAllCaps="false"
+                app:icon="@android:drawable/ic_menu_today"
+                app:cornerRadius="8dp"
+                android:layout_marginBottom="24dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time Range"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#495057"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="32dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPickStartTime"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:text="Start"
+                    android:textAllCaps="false"
+                    app:icon="@android:drawable/ic_menu_recent_history"
+                    app:cornerRadius="8dp"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPickEndTime"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:text="End"
+                    android:textAllCaps="false"
+                    app:icon="@android:drawable/ic_menu_recent_history"
+                    app:cornerRadius="8dp" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBarAvailability"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveSlot"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Save Availability"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp"
+                android:backgroundTint="#0D6EFD" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

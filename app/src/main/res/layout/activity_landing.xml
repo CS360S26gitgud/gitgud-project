@@ -1,30 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="32dp">
+    android:padding="24dp"
+    android:background="#F8F9FA"
+    android:gravity="center_horizontal">
+
+    <!-- Hero Section / Decorative Element -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="48dp"
+        app:cardCornerRadius="110dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
+        app:cardBackgroundColor="@android:color/transparent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/meditation_zen" />
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <TextView
+        android:id="@+id/tvLandingTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GitgudCare"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="#212529"
+        android:layout_marginTop="24dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Counselling App"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="48dp" />
+        android:text="Your door to professional counseling."
+        android:textSize="16sp"
+        android:textColor="#6C757D"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="64dp" />
 
-    <Button
+    <!-- Action Buttons -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnGoToLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:text="Log In"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="16dp"
+        android:backgroundTint="#0D6EFD"
         android:layout_marginBottom="16dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnGoToRegister"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="Create Account"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        app:cornerRadius="16dp"
+        app:strokeColor="#0D6EFD"
+        android:textColor="#0D6EFD" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register" />
+        android:text="Version 1.0.0"
+        android:textSize="12sp"
+        android:textColor="#ADB5BD"
+        android:layout_marginBottom="16dp" />
 
 </LinearLayout>
