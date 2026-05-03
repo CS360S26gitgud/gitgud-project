@@ -78,11 +78,22 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 ? appt.getTimeSlot().getDate() + " at " + appt.getTimeSlot().getStartTime()
                 : "N/A";
 
+        String status = appt.getStatus();
+
         holder.tvCounselorName.setText("Counselor: " + counselorName);
         holder.tvDateTime.setText("Date: " + dateStr);
         
-        String status = appt.getStatus();
         holder.tvStatus.setText("Status: " + status);
+
+        // US-17: Show attached materials if any
+        List<String> mats = appt.getMaterials();
+        if (mats != null && !mats.isEmpty()) {
+            holder.tvHistoryMaterials.setText("Materials:\n" + String.join("\n", mats));
+            holder.tvHistoryMaterials.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvHistoryMaterials.setVisibility(View.GONE);
+        }
+
 
         // Reset visibility and colors to avoid state leakage in recycled views
         holder.btnLeaveReview.setVisibility(View.GONE);
@@ -127,8 +138,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
      * ViewHolder for appointment items in the history list.
      */
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCounselorName, tvDateTime, tvStatus, tvReviewSubmitted;
+        TextView tvCounselorName, tvDateTime, tvStatus, tvReviewSubmitted, tvHistoryMaterials;
         Button   btnLeaveReview, btnCancelAppt, btnRescheduleAppt;
+
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -138,7 +150,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             tvReviewSubmitted = itemView.findViewById(R.id.tvReviewSubmitted);
             btnLeaveReview    = itemView.findViewById(R.id.btnLeaveReview);
             btnCancelAppt     = itemView.findViewById(R.id.btnCancelAppt);
-            btnRescheduleAppt = itemView.findViewById(R.id.btnRescheduleAppt);
+            btnRescheduleAppt  = itemView.findViewById(R.id.btnRescheduleAppt);
+            tvHistoryMaterials = itemView.findViewById(R.id.tvHistoryMaterials);
+
         }
     }
 }

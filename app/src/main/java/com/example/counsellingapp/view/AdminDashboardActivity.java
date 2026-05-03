@@ -17,8 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.counsellingapp.R;
 import com.example.counsellingapp.controller.AdminController;
+import com.example.counsellingapp.controller.ActivityController;
 import com.example.counsellingapp.model.Counselor;
 import com.example.counsellingapp.model.Student;
+import com.example.counsellingapp.model.SystemActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
@@ -64,15 +67,18 @@ import java.util.List;
 public class AdminDashboardActivity extends AppCompatActivity {
 
     private Button      btnLogout, btnCreateStudent, btnRegisterCounselor;
-    private Button      btnShowStudents, btnShowCounselors;
+    private Button      btnShowStudents, btnShowCounselors, btnShowLogs;
     private RecyclerView rvList;
+
     private ProgressBar  progressBar;
     private TextView     tvSectionTitle, tvEmpty;
 
     private AdminController adminController;
+    private ActivityController activityController;
 
-    /** Tracks which section is currently displayed: {@code "students"} or {@code "counselors"}. */
+    /** Tracks which section is currently displayed: {@code "students"}, {@code "counselors"}, or {@code "logs"}. */
     private String currentSection = "students";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +92,14 @@ public class AdminDashboardActivity extends AppCompatActivity {
         btnRegisterCounselor = findViewById(R.id.btnRegisterCounselor);
         btnShowStudents      = findViewById(R.id.btnShowStudents);
         btnShowCounselors    = findViewById(R.id.btnShowCounselors);
+        btnShowLogs          = findViewById(R.id.btnShowLogs);
         rvList               = findViewById(R.id.rvAdminList);
         progressBar          = findViewById(R.id.progressBarAdmin);
         tvSectionTitle       = findViewById(R.id.tvAdminSectionTitle);
         tvEmpty              = findViewById(R.id.tvAdminEmpty);
+
+        activityController = new ActivityController();
+
 
         rvList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -102,6 +112,12 @@ public class AdminDashboardActivity extends AppCompatActivity {
             currentSection = "counselors";
             loadCounselors();
         });
+
+        btnShowLogs.setOnClickListener(v -> {
+            currentSection = "logs";
+            loadLogs();
+        });
+
 
         btnCreateStudent.setOnClickListener(v -> showCreateStudentDialog());
         btnRegisterCounselor.setOnClickListener(v -> showRegisterCounselorDialog());
@@ -120,8 +136,10 @@ public class AdminDashboardActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if ("counselors".equals(currentSection)) loadCounselors();
+        else if ("logs".equals(currentSection)) loadLogs();
         else loadStudents();
     }
+
 
     // -------------------------------------------------------------------------
     // US-18: Student list and actions
@@ -491,5 +509,38 @@ public class AdminDashboardActivity extends AppCompatActivity {
                                 }))
                 .setNegativeButton("Cancel", null)
                 .show();
+    }
+    /**
+     * Fetches recent system activities and renders them in the list.
+     */
+    private void loadLogs() {
+        tvSectionTitle.setText("System Activity Logs");
+        btnCreateStudent.setVisibility(View.GONE);
+        btnRegisterCounselor.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        tvEmpty.setVisibility(View.GONE);
+
+        activityController.getRecentActivities(50, new ActivityController.ActivityListCallback() {
+            @Override
+            public void onSuccess(List<SystemActivity> activities) {
+                progressBar.setVisibility(View.GONE);
+                if (activities.isEmpty()) {
+                    tvEmpty.setVisibility(View.VISIBLE);
+                    rvList.setVisibility(View.GONE);
+                } else {
+                    tvEmpty.setVisibility(View.GONE);
+                    rvList.setVisibility(View.VISIBLE);
+                    rvList.setAdapter(new ActivityLogAdapter(activities));
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(AdminDashboardActivity.this,
+                        "Failed to load logs: " + e.getMessage(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

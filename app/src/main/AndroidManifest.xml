@@ -37,6 +37,8 @@
 
         <activity android:name=".view.CounselorDashboardActivity" />
         <activity android:name=".view.SetAvailabilityActivity" />
+        <activity android:name=".view.AdminDashboardActivity" />
     </application>
+
 
 </manifest>

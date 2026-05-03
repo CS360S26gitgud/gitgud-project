@@ -19,6 +19,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AppointmentController {
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final ActivityController activityController = new ActivityController();
+
 
     private static final String COL_APPOINTMENTS = "appointments";
     private static final String COL_STUDENTS     = "students";     // was "users" — fixed
@@ -191,7 +193,9 @@ public class AppointmentController {
             String msg = "Session scheduled with " + slot.getCounselorName()
                     + " on " + slot.getDate() + " at " + slot.getStartTime();
             NotificationHelper.sendNotification(context, "Appointment Booked", msg);
+            activityController.logActivity("BOOKING", "Student booked appointment with counselor " + slot.getCounselorName(), "System");
             cb.onSuccess();
+
         }).addOnFailureListener(cb::onFailure);
     }
 
@@ -210,7 +214,11 @@ public class AppointmentController {
             transaction.update(apptRef, "status", "cancelled");
             transaction.update(slotRef, "booked", false);
             return null;
-        }).addOnSuccessListener(v -> cb.onSuccess())
+        }).addOnSuccessListener(v -> {
+            activityController.logActivity("CANCELLATION", "Student cancelled appointment " + appointmentId, "Student");
+            cb.onSuccess();
+        })
+
           .addOnFailureListener(cb::onFailure);
     }
 
@@ -228,7 +236,9 @@ public class AppointmentController {
         }).addOnSuccessListener(v -> {
             String msg = "Your appointment with Counselor " + appt.getCounselorName() + " has been cancelled.";
             NotificationHelper.sendNotification(context, "Appointment Cancelled", msg);
+            activityController.logActivity("CANCELLATION", "Counselor " + appt.getCounselorName() + " cancelled appointment for student", "Counselor");
             cb.onSuccess();
+
         }).addOnFailureListener(cb::onFailure);
     }
 
@@ -268,7 +278,9 @@ public class AppointmentController {
         }).addOnSuccessListener(v -> {
             NotificationHelper.sendNotification(context, "Appointment Rescheduled",
                     "You moved your appointment to " + newSlot.getDate());
+            activityController.logActivity("RESCHEDULE", "Student rescheduled appointment to " + newSlot.getDate(), "Student");
             cb.onSuccess();
+
         }).addOnFailureListener(cb::onFailure);
     }
 
@@ -319,7 +331,56 @@ public class AppointmentController {
         db.collection(COL_APPOINTMENTS)
                 .document(appointmentId)
                 .update("status", "completed")
+                .addOnSuccessListener(v -> {
+                    activityController.logActivity("COMPLETED", "Counselor marked appointment " + appointmentId + " as completed", "Counselor");
+                    cb.onSuccess();
+                })
+
+                .addOnFailureListener(cb::onFailure);
+    }
+
+    // -------------------------------------------------------------------------
+    // US-09: Student upcoming appointments (for calendar highlighting)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Fetches upcoming appointments for a student and resolves collaborators.
+     * Used by StudentDashboardActivity to highlight the next appointment on the CalendarView.
+     *
+     * @param studentId The unique ID of the student.
+     * @param callback  The callback to handle success or failure.
+     */
+    public void getStudentUpcomingAppointments(String studentId, AppointmentListCallback callback) {
+        db.collection(COL_APPOINTMENTS)
+                .whereEqualTo("studentId", studentId)
+                .whereEqualTo("status", "upcoming")
+                .get()
+                .addOnSuccessListener(snapshots -> {
+                    List<Appointment> appointments = snapshots.toObjects(Appointment.class);
+                    if (appointments.isEmpty()) { callback.onSuccess(appointments); return; }
+                    resolveCollaborators(appointments, callback);
+                })
+                .addOnFailureListener(callback::onFailure);
+    }
+
+    // -------------------------------------------------------------------------
+    // US-17: Counselor attaches material to appointment
+    // -------------------------------------------------------------------------
+
+    /**
+     * Updates the materials list for an appointment in Firestore.
+     * Called by the counselor from their dashboard to attach resources.
+     *
+     * @param appointmentId The Firestore document ID of the appointment.
+     * @param materials     The full updated list of material strings.
+     * @param cb            Fires onSuccess() on write completion, onFailure() on error.
+     */
+    public void addMaterialToAppointment(String appointmentId, List<String> materials, BookingCallback cb) {
+        db.collection(COL_APPOINTMENTS)
+                .document(appointmentId)
+                .update("materials", materials)
                 .addOnSuccessListener(v -> cb.onSuccess())
                 .addOnFailureListener(cb::onFailure);
     }
 }
+

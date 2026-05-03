@@ -23,8 +23,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"/>
 
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" />
+
     <Button
         android:id="@+id/btnSearchCounselors"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Search Counselors"

@@ -49,6 +49,8 @@ public class AdminController {
 
     private final FirebaseFirestore db    = FirebaseFirestore.getInstance();
     private final FirebaseAuth      mAuth = FirebaseAuth.getInstance();
+    private final ActivityController activityController = new ActivityController();
+
 
     // -------------------------------------------------------------------------
     // Callback interfaces
@@ -129,8 +131,12 @@ public class AdminController {
                     Student student = new Student(uid, name, email);
                     db.collection(COLLECTION_STUDENTS).document(uid)
                             .set(student)
-                            .addOnSuccessListener(v -> cb.onSuccess())
+                            .addOnSuccessListener(v -> {
+                                activityController.logActivity("APPROVAL", "Admin created new student account: " + name, "Admin");
+                                cb.onSuccess();
+                            })
                             .addOnFailureListener(cb::onFailure);
+
                 })
                 .addOnFailureListener(cb::onFailure);
     }
@@ -172,8 +178,13 @@ public class AdminController {
     public void setStudentActive(String uid, boolean active, AdminCallback cb) {
         db.collection(COLLECTION_STUDENTS).document(uid)
                 .update("active", active)
-                .addOnSuccessListener(v -> cb.onSuccess())
+                .addOnSuccessListener(v -> {
+                    String action = active ? "ACTIVATION" : "DEACTIVATION";
+                    activityController.logActivity(action, "Admin " + (active ? "activated" : "deactivated") + " student account " + uid, "Admin");
+                    cb.onSuccess();
+                })
                 .addOnFailureListener(cb::onFailure);
+
     }
 
     /**
@@ -217,8 +228,12 @@ public class AdminController {
                     Counselor counselor = new Counselor(uid, name, email, specialization, null);
                     db.collection(COLLECTION_COUNSELORS).document(uid)
                             .set(counselor)
-                            .addOnSuccessListener(v -> cb.onSuccess())
+                            .addOnSuccessListener(v -> {
+                                activityController.logActivity("REGISTRATION", "Admin registered new counselor: " + name, "Admin");
+                                cb.onSuccess();
+                            })
                             .addOnFailureListener(cb::onFailure);
+
                 })
                 .addOnFailureListener(cb::onFailure);
     }
@@ -237,8 +252,13 @@ public class AdminController {
     public void setCounselorApproved(String counselorId, boolean approved, AdminCallback cb) {
         db.collection(COLLECTION_COUNSELORS).document(counselorId)
                 .update("approved", approved)
-                .addOnSuccessListener(v -> cb.onSuccess())
+                .addOnSuccessListener(v -> {
+                    String action = approved ? "APPROVAL" : "REVOCATION";
+                    activityController.logActivity(action, "Admin " + (approved ? "approved" : "revoked") + " counselor " + counselorId, "Admin");
+                    cb.onSuccess();
+                })
                 .addOnFailureListener(cb::onFailure);
+
     }
 
     /**
@@ -304,7 +324,11 @@ public class AdminController {
     public void clearCounselorSuspension(String counselorId, AdminCallback cb) {
         db.collection(COLLECTION_COUNSELORS).document(counselorId)
                 .update("suspended", false, "meetingCleared", false)
-                .addOnSuccessListener(v -> cb.onSuccess())
+                .addOnSuccessListener(v -> {
+                    activityController.logActivity("APPROVAL", "Admin cleared suspension for counselor " + counselorId + " after meeting", "Admin");
+                    cb.onSuccess();
+                })
                 .addOnFailureListener(cb::onFailure);
+
     }
 }

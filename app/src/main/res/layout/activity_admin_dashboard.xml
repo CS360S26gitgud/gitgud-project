@@ -33,7 +33,7 @@
             android:backgroundTint="#F44336"/>
     </LinearLayout>
 
-    <!-- Tab row: Students | Counselors -->
+    <!-- Tab row: Students | Counselors | Logs -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,7 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Students"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="2dp"
+            android:textSize="12sp"
             android:backgroundTint="#1565C0"/>
 
         <Button
@@ -55,9 +56,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Counselors"
-            android:layout_marginStart="4dp"
+            android:layout_marginHorizontal="2dp"
+            android:textSize="12sp"
             android:backgroundTint="#4527A0"/>
+
+        <Button
+            android:id="@+id/btnShowLogs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Logs"
+            android:layout_marginStart="2dp"
+            android:textSize="12sp"
+            android:backgroundTint="#37474F"/>
     </LinearLayout>
+
 
     <!-- Section header + action button -->
     <LinearLayout

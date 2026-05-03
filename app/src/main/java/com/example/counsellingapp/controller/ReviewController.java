@@ -24,7 +24,9 @@ import java.util.Set;
 public class ReviewController {
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final ActivityController activityController = new ActivityController();
     private static final String COL_REVIEWS = "reviews";
+
 
     // -------------------------------------------------------------------------
     // Callback interfaces
@@ -62,8 +64,12 @@ public class ReviewController {
         db.collection(COL_REVIEWS)
                 .document(review.getId())   // documentId = appointmentId
                 .set(review)
-                .addOnSuccessListener(v -> cb.onSuccess())
+                .addOnSuccessListener(v -> {
+                    activityController.logActivity("REVIEW", "New anonymous review submitted for counselor " + review.getCounselorId(), "Student");
+                    cb.onSuccess();
+                })
                 .addOnFailureListener(cb::onFailure);
+
     }
 
     // -------------------------------------------------------------------------
