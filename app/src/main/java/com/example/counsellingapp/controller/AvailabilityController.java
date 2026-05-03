@@ -207,9 +207,20 @@ public class AvailabilityController {
                                     }
                                 }
                                 for (TimeSlot s : slots) {
-                                    String name = nameMap.get(s.getCounselorId());
-                                    s.setCounselorName(name != null ? name : "Unknown");
+                                    Counselor c = counselorSnap.getDocuments().stream()
+                                            .filter(d -> d.getId().equals(s.getCounselorId()))
+                                            .findFirst()
+                                            .map(d -> d.toObject(Counselor.class))
+                                            .orElse(null);
+
+                                    if (c != null) {
+                                        s.setCounselorName(c.getName());
+                                        s.setSpecialization(c.getSpecialization());
+                                    } else {
+                                        s.setCounselorName("Unknown");
+                                    }
                                 }
+
                                 slots.sort((a, b) -> {
                                     int cmp = a.getDate().compareTo(b.getDate());
                                     return cmp != 0 ? cmp

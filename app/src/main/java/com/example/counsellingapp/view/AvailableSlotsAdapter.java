@@ -39,7 +39,11 @@ public class AvailableSlotsAdapter extends RecyclerView.Adapter<AvailableSlotsAd
 
         // Check if we populated the name; if not fallback to ID
         String displayName = slot.getCounselorName() != null ? slot.getCounselorName() : "ID: " + slot.getCounselorId();
-        holder.tvCounselorName.setText("Counselor: " + displayName);
+        holder.tvCounselorName.setText(displayName);
+        
+        String spec = slot.getSpecialization() != null ? slot.getSpecialization() : "General Practice";
+        holder.tvSpecialization.setText(spec);
+
         holder.tvTime.setText("Date: " + slot.getDate() + " | " + slot.getStartTime() + " - " + slot.getEndTime());
 
         holder.btnBookSlot.setOnClickListener(v -> clickListener.onBookClicked(slot));
@@ -56,14 +60,16 @@ public class AvailableSlotsAdapter extends RecyclerView.Adapter<AvailableSlotsAd
     }
 
     public static class SlotViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCounselorName, tvTime;
+        TextView tvCounselorName, tvSpecialization, tvTime;
         Button btnBookSlot;
 
         public SlotViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCounselorName = itemView.findViewById(R.id.tvCounselorName);
+            tvSpecialization = itemView.findViewById(R.id.tvSpecialization);
             tvTime = itemView.findViewById(R.id.tvTime);
             btnBookSlot = itemView.findViewById(R.id.btnBookSlot);
         }
     }
+
 }

@@ -42,6 +42,32 @@
             android:textColor="#6C757D"
             android:layout_marginTop="4dp" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="6dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@android:drawable/btn_star_big_on"
+                android:contentDescription="Rating"
+                android:tint="#FFC107" />
+
+            <TextView
+                android:id="@+id/tvCounselorCardRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4.5 (12 reviews)"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#212529"
+                android:layout_marginStart="4dp"/>
+        </LinearLayout>
+
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnViewReviews"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"

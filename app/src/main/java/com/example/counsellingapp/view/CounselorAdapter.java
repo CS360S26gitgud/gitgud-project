@@ -88,6 +88,14 @@ public class CounselorAdapter extends RecyclerView.Adapter<CounselorAdapter.View
         holder.tvSpecialization.setText("Specialization: " + spec);
         holder.tvDays.setText("Available: " + days);
 
+        if (counselor.getReviewCount() > 0) {
+            String ratingStr = String.format(java.util.Locale.US, "%.1f (%d reviews)", 
+                counselor.getAverageRating(), counselor.getReviewCount());
+            holder.tvRating.setText(ratingStr);
+        } else {
+            holder.tvRating.setText("No ratings yet");
+        }
+
         holder.btnViewReviews.setOnClickListener(v -> {
             Intent intent = new Intent(ctx, CounselorReviewsActivity.class);
             intent.putExtra(CounselorReviewsActivity.EXTRA_COUNSELOR_ID,   counselor.getUid());
@@ -104,7 +112,7 @@ public class CounselorAdapter extends RecyclerView.Adapter<CounselorAdapter.View
      * ViewHolder for a single counselor card in the search results list.
      */
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvSpecialization, tvDays;
+        TextView tvName, tvSpecialization, tvDays, tvRating;
         Button   btnViewReviews;
 
         /**
@@ -117,7 +125,9 @@ public class CounselorAdapter extends RecyclerView.Adapter<CounselorAdapter.View
             tvName           = itemView.findViewById(R.id.tvCounselorCardName);
             tvSpecialization = itemView.findViewById(R.id.tvCounselorCardSpec);
             tvDays           = itemView.findViewById(R.id.tvCounselorCardDays);
+            tvRating         = itemView.findViewById(R.id.tvCounselorCardRating);
             btnViewReviews   = itemView.findViewById(R.id.btnViewReviews);
         }
     }
+
 }

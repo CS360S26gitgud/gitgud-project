@@ -32,6 +32,14 @@ public class TimeSlot {
     private String counselorName;
 
     /**
+     * The specialization of the counselor.
+     * This is a transient field used for UI filtering and is not persisted to Firestore.
+     */
+    @com.google.firebase.firestore.Exclude
+    private String specialization;
+
+
+    /**
      * Default constructor required for Firestore automatic deserialization.
      */
     public TimeSlot() {}//empty constructor for Firestore deserialization
@@ -98,5 +106,12 @@ public class TimeSlot {
     /** @param name The counselor's display name to set for transient use. */
     public void setCounselorName(String name) {this.counselorName = name;}
 
+    /** @return The counselor's specialization for filtering. */
+    public String getSpecialization() { return specialization; }
+
+    /** @param specialization The specialization to set for transient use. */
+    public void setSpecialization(String specialization) { this.specialization = specialization; }
+
 }
+
 

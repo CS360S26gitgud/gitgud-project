@@ -20,9 +20,11 @@ public class AvailableSlotsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private AvailableSlotsAdapter adapter;
+    private android.widget.Spinner spSpecialization, spDay;
 
     private AvailabilityController availabilityController;
     private AppointmentController appointmentController;
+    private List<TimeSlot> allSlots = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +37,85 @@ public class AvailableSlotsActivity extends AppCompatActivity {
         adapter = new AvailableSlotsAdapter(new ArrayList<>(), this::confirmBooking);
         recyclerView.setAdapter(adapter);
 
+        spSpecialization = findViewById(R.id.spSpecialization);
+        spDay = findViewById(R.id.spDay);
+
+        setupFilters();
+
         availabilityController = new AvailabilityController();
         appointmentController = new AppointmentController();
 
         fetchSlots();
     }
 
+    private void setupFilters() {
+        List<String> specs = new ArrayList<>();
+        specs.add("All Specializations");
+        specs.addAll(com.example.counsellingapp.model.Constants.SPECIALIZATIONS);
+        
+        android.widget.ArrayAdapter<String> specAdapter = new android.widget.ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_dropdown_item, specs);
+        spSpecialization.setAdapter(specAdapter);
+
+        List<String> days = new ArrayList<>();
+        days.add("All Days");
+        days.addAll(com.example.counsellingapp.model.Constants.DAYS);
+        
+        android.widget.ArrayAdapter<String> dayAdapter = new android.widget.ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_dropdown_item, days);
+        spDay.setAdapter(dayAdapter);
+
+        android.widget.AdapterView.OnItemSelectedListener listener = new android.widget.AdapterView.OnItemSelectedListener() {
+            @Override public void onItemSelected(android.widget.AdapterView<?> p, android.view.View v, int i, long l) { applyFilters(); }
+            @Override public void onNothingSelected(android.widget.AdapterView<?> p) {}
+        };
+
+        spSpecialization.setOnItemSelectedListener(listener);
+        spDay.setOnItemSelectedListener(listener);
+    }
+
+    private void applyFilters() {
+        String selectedSpec = spSpecialization.getSelectedItem().toString();
+        String selectedDay = spDay.getSelectedItem().toString();
+
+        List<TimeSlot> filtered = new ArrayList<>();
+        for (TimeSlot slot : allSlots) {
+            boolean matchesSpec = selectedSpec.equals("All Specializations") || 
+                                 (slot.getSpecialization() != null && slot.getSpecialization().equals(selectedSpec));
+            
+            // Derive day from date string YYYY-MM-DD
+            String slotDay = getDayFromDate(slot.getDate());
+            boolean matchesDay = selectedDay.equals("All Days") || 
+                                (slotDay != null && slotDay.equalsIgnoreCase(selectedDay));
+
+            if (matchesSpec && matchesDay) {
+                filtered.add(slot);
+            }
+        }
+        adapter.updateData(filtered);
+    }
+
+    private String getDayFromDate(String dateStr) {
+        try {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US);
+            java.util.Date date = sdf.parse(dateStr);
+            java.util.Calendar cal = java.util.Calendar.getInstance();
+            cal.setTime(date);
+            return cal.getDisplayName(java.util.Calendar.DAY_OF_WEEK, java.util.Calendar.LONG, java.util.Locale.US);
+        } catch (Exception e) { return null; }
+    }
+
     private void fetchSlots() {
         availabilityController.getAllAvailableSlots(new AvailabilityController.SlotListCallback() {
             @Override
             public void onSuccess(List<TimeSlot> slots) {
-                adapter.updateData(slots);
+                allSlots = slots;
+                applyFilters();
                 if(slots.isEmpty()) {
                     Toast.makeText(AvailableSlotsActivity.this, "No slots available.", Toast.LENGTH_SHORT).show();
                 }
             }
+
 
             @Override
             public void onFailure(Exception e) {
