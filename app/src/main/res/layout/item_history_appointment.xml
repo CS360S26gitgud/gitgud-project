@@ -1,86 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="12dp"
-    android:layout_marginHorizontal="8dp"
-    android:layout_marginBottom="8dp"
-    android:background="@android:color/white"
-    android:elevation="2dp">
-
-    <TextView
-        android:id="@+id/tvHistoryCounselorName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvHistoryDateTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:layout_marginTop="4dp" />
-
-    <TextView
-        android:id="@+id/tvHistoryStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:layout_marginTop="2dp" />
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <Button
-            android:id="@+id/btnLeaveReview"
+        <TextView
+            android:id="@+id/tvHistoryCounselorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Leave a Review"
-            android:visibility="gone" />
+            android:text="Counselor Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#212529" />
 
-        <Button
-            android:id="@+id/btnCancelAppt"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tvHistoryDateTime"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cancel"
-            android:backgroundTint="#F44336"
-            android:textColor="@android:color/white"
-            android:layout_marginEnd="4dp"
-            android:visibility="gone" />
+            android:text="Date &amp; Time"
+            android:textSize="14sp"
+            android:textColor="#495057"
+            android:layout_marginTop="4dp" />
 
-        <Button
-            android:id="@+id/btnRescheduleAppt"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tvHistoryStatus"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Reschedule"
-            android:layout_marginStart="4dp"
+            android:text="Status"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancelAppt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                android:backgroundTint="#DC3545"
+                android:textColor="@android:color/white"
+                app:cornerRadius="8dp"
+                android:layout_marginEnd="6dp"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRescheduleAppt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reschedule"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                android:backgroundTint="#0D6EFD"
+                android:textColor="@android:color/white"
+                app:cornerRadius="8dp"
+                android:layout_marginStart="6dp"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLeaveReview"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Leave a Review"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                app:cornerRadius="8dp"
+                app:strokeColor="#0D6EFD"
+                android:textColor="#0D6EFD"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvReviewSubmitted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✓ Review submitted"
+            android:textColor="#198754"
+            android:textStyle="italic"
+            android:textSize="13sp"
+            android:layout_marginTop="8dp"
             android:visibility="gone" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvReviewSubmitted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="✓ Review submitted"
-        android:textColor="#4CAF50"
-        android:textStyle="italic"
-        android:layout_marginTop="8dp"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/tvHistoryMaterials"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="13sp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone" />
-
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

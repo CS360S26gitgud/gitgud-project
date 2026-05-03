@@ -1,66 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#F8F9FA">
 
+    <!-- Header Section -->
     <TextView
         android:id="@+id/tvCounselorWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome"
-        android:textSize="20sp"
+        android:text="Welcome!"
+        android:textSize="32sp"
         android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:textColor="#212529"
+        android:layout_marginTop="8dp"/>
 
-    <Button
-        android:id="@+id/btnSetAvailability"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Counselor Dashboard"
+        android:textSize="14sp"
+        android:textColor="#6C757D"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Overview Card (NEW) -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set / Update Availability"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@android:color/white">
 
-    <Button
-        android:id="@+id/btnMyReviews"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next Appointment"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#00796B"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ready for your next session?"
+                android:textSize="14sp"
+                android:textColor="#6C757D"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Quick Actions -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Reviews"
-        android:layout_marginTop="8dp" />
+        android:orientation="vertical"
+        android:layout_marginBottom="24dp">
 
+        <!-- PRIMARY Button (Counselor -> Teal) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSetAvailability"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Set / Update Availability"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            android:backgroundTint="#00796B"
+            android:layout_marginBottom="12dp" />
+
+        <!-- SECONDARY Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMyReviews"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="My Reviews"
+            android:textAllCaps="false"
+            app:cornerRadius="12dp"
+            app:strokeColor="#00796B"
+            android:textColor="#00796B" />
+    </LinearLayout>
+
+    <!-- Appointments List Section -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Upcoming Appointments"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp" />
+        android:textColor="#212529"
+        android:layout_marginBottom="12dp" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/tvNoAppointments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No upcoming appointments."
-        android:visibility="gone" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAppointments"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
 
-    <Button
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvNoAppointments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="No upcoming appointments."
+            android:textColor="#6C757D"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAppointments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp" />
+    </FrameLayout>
+
+    <!-- Logout at bottom -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCounselorLogout"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Log Out"
+        android:textAllCaps="false"
+        android:textColor="#DC3545"
         android:layout_marginTop="8dp" />
 
 </LinearLayout>
