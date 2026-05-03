@@ -4,24 +4,32 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.Arrays;
 
+/**
+ * Unit tests for shared identity fields via concrete subclasses.
+ * User is abstract and cannot be instantiated directly.
+ */
 public class UserTest {
     @Test
-    public void testUserInitialization() {
-        User student = new User("abc-123", "student", "student@lums.edu.pk", "student");
+    public void testStudentInitialization() {
+        // Using Student concrete class to test base User fields
+        Student student = new Student("abc-123", "Affan", "student@test.com");
         
         assertEquals("abc-123", student.getUid());
-        assertEquals("student@lums.edu.pk", student.getEmail());
+        assertEquals("Affan", student.getName());
+        assertEquals("student@test.com", student.getEmail());
         assertEquals("student", student.getRole());
     }
 
     @Test
     public void testCounselorFields() {
-        User counselor = new User("xyz-999", "counselor", "counselor@lums.edu.pk", "counselor");
-        counselor.setSpecialization("Academic Advisor");
-        counselor.setAvailableDays(Arrays.asList("Monday", "Wednesday"));
+        // Using Counselor concrete class to test specialization and availability
+        Counselor counselor = new Counselor("xyz-999", "Dr. Moosa", "counselor@test.com", "Academic Advisor", Arrays.asList("Monday", "Wednesday"));
 
-        assertEquals("counselor", counselor.getRole());
+        assertEquals("xyz-999", counselor.getUid());
         assertEquals("Academic Advisor", counselor.getSpecialization());
         assertTrue(counselor.getAvailableDays().contains("Monday"));
+        assertEquals("counselor", counselor.getRole());
     }
 }
+
+

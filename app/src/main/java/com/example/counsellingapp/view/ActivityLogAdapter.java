@@ -17,9 +17,12 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Adapter for displaying system activity logs in the Admin Dashboard.
+ * Adapter for displaying system activity logs in the Admin Dashboard (US-21).
+ * Handles color-coding of logs based on event type (e.g., Green for approvals,
+ * Red for cancellations) to provide a premium monitoring experience.
  */
 public class ActivityLogAdapter extends RecyclerView.Adapter<ActivityLogAdapter.ViewHolder> {
+
 
     private final List<SystemActivity> activities;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, HH:mm", Locale.getDefault());

@@ -10,8 +10,11 @@ import java.util.List;
 
 /**
  * Controller for tracking and retrieving system-wide activity logs (US-21).
+ * Surfaces logic for logging events (logActivity) and fetching them (getRecentActivities)
+ * for the Admin dashboard monitoring feed.
  */
 public class ActivityController {
+
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String COL_ACTIVITIES = "activities";

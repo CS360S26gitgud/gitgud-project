@@ -22,9 +22,10 @@ import java.util.List;
 
 /**
  * RecyclerView adapter for displaying Appointment objects in the counselor dashboard.
- * Supports marking as completed, cancelling, and rescheduling.
+ * Supports marking as completed, cancelling, rescheduling, and User Story 17 (Attaching Materials).
  */
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.ViewHolder> {
+
 
     public interface OnAppointmentActionListener {
         void onCancel(Appointment appointment);

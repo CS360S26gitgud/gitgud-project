@@ -19,10 +19,11 @@ import java.util.Set;
 
 /**
  * RecyclerView adapter for the student's appointment history screen.
- * Supports User Story 11 (View History), User Story 06 (Reviews), and 
- * User Story 05 (Cancel and Reschedule).
+ * Supports User Story 11 (View History), User Story 06 (Reviews), 
+ * User Story 05 (Cancel and Reschedule), and User Story 17 (View Attached Materials).
  */
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
+
 
     /**
      * Listener interface for handling appointment management actions in the UI.

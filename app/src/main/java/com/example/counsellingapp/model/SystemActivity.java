@@ -4,13 +4,20 @@ import com.google.firebase.Timestamp;
 
 /**
  * Represents a single system event for US-21 monitoring.
+ * Tracks what happened, when, and who initiated it.
  */
 public class SystemActivity {
+    /** Unique ID of the activity document in Firestore. */
     private String id;
-    private String type;        // BOOKING, CANCELLATION, APPROVAL, REVIEW, etc.
-    private String description; // Human-readable description
+    /** Category of event (e.g., BOOKING, CANCELLATION, APPROVAL). */
+    private String type;
+    /** Human-readable description of the event. */
+    private String description;
+    /** Name of the user (or "System") who triggered the event. */
     private String initiatorName;
+    /** Server-side timestamp when the event was logged. */
     private Timestamp timestamp;
+
 
     public SystemActivity() {} // Required for Firestore
 

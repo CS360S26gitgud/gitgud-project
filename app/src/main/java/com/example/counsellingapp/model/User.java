@@ -22,6 +22,7 @@ package com.example.counsellingapp.model;
  * <ul>
  *   <li>Hold shared identity data common to all user types.
  *   <li>Provide a stable base type for {@link Appointment} transient fields.
+ *   <li>Expose a role discriminator for runtime logic.
  * </ul>
  *
  * CRC Collaborators: {@link Student}, {@link Counselor}, {@link Admin}, {@link Appointment}
@@ -54,6 +55,14 @@ public abstract class User {
         this.name  = name;
         this.email = email;
     }
+
+    /**
+     * Returns the role of the user (e.g., "student", "counselor", "admin").
+     * Implementation is provided by concrete subclasses.
+     *
+     * @return The user's role string.
+     */
+    public abstract String getRole();
 
     /** @return The unique Firebase Authentication UID. */
     public String getUid() { return uid; }

@@ -62,7 +62,14 @@ public class Student extends User {
     public boolean isActive() { return active; }
 
     /**
+     * @return The constant role string "student".
+     */
+    @Override
+    public String getRole() { return "student"; }
+
+    /**
      * Sets the active state of this account.
+
      * Should only be called via {@link AdminController} — never by student-facing code.
      *
      * @param active {@code true} to activate; {@code false} to deactivate.

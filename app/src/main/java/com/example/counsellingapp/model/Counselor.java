@@ -144,6 +144,11 @@ public class Counselor extends User {
         this.reviewCount    = 0;
     }
 
+    @Override
+    public String getRole() {
+        return "counselor";
+    }
+
     // -------------------------------------------------------------------------
     // Specialization / availability accessors
     // -------------------------------------------------------------------------

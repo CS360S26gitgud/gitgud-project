@@ -1,5 +1,8 @@
 package com.example.counsellingapp.model;
 
+import com.example.counsellingapp.controller.AdminController;
+import com.example.counsellingapp.view.LandingActivity;
+
 /**
  * Represents an administrator user in the counselling system.
  *
@@ -38,5 +41,10 @@ public class Admin extends User {
      */
     public Admin(String uid, String name, String email) {
         super(uid, name, email);
+    }
+
+    @Override
+    public String getRole() {
+        return "admin";
     }
 }

@@ -167,8 +167,12 @@ public class Appointment {
 
     /** @param dateTime The session timestamp to assign. */
     public void setDateTime(com.google.firebase.Timestamp dateTime) { this.dateTime = dateTime; }
+    /** @return The list of resource links or notes attached by the counselor. */
     public List<String> getMaterials() { return materials; }
+
+    /** @param materials The updated list of resources to attach to this appointment. */
     public void setMaterials(List<String> materials) { this.materials = materials; }
+
 
 
     /**

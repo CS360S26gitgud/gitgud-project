@@ -52,25 +52,56 @@ public class ReviewController {
     // -------------------------------------------------------------------------
 
     /**
-     * Writes a review document to Firestore using the appointmentId as the document ID.
-     * Because we use set() (not add()), a second call for the same appointment will
-     * silently overwrite — but SubmitReviewActivity checks existence before showing
-     * the form, so this path is unreachable under normal app flow.
+     * Writes a review document to Firestore and atomically updates the counselor's
+     * average rating and suspension state (US-20).
      *
-     * @param review Fully populated Review object. review.getId() must equal the appointmentId.
+     * <p>Uses a transaction to ensure that the incremental average calculation
+     * and the suspension threshold check (2.5 stars) are performed atomically.
+     * If the new average falls below the threshold, the counselor is marked
+     * {@code suspended = true} immediately.
+     *
+     * @param review Fully populated Review object.
      * @param cb     Fires onSuccess() on write completion, onFailure() on error.
      */
     public void submitReview(Review review, SimpleCallback cb) {
-        db.collection(COL_REVIEWS)
-                .document(review.getId())   // documentId = appointmentId
-                .set(review)
-                .addOnSuccessListener(v -> {
-                    activityController.logActivity("REVIEW", "New anonymous review submitted for counselor " + review.getCounselorId(), "Student");
-                    cb.onSuccess();
-                })
-                .addOnFailureListener(cb::onFailure);
+        com.google.firebase.firestore.DocumentReference reviewRef =
+                db.collection(COL_REVIEWS).document(review.getId());
+        com.google.firebase.firestore.DocumentReference counselorRef =
+                db.collection("counselors").document(review.getCounselorId());
 
+        db.runTransaction(transaction -> {
+            // 1. Write the review
+            transaction.set(reviewRef, review);
+
+            // 2. Fetch and update counselor rating (US-20)
+            com.google.firebase.firestore.DocumentSnapshot counselorSnap = transaction.get(counselorRef);
+            if (counselorSnap.exists()) {
+                double oldAvg = counselorSnap.getDouble("averageRating") != null ? counselorSnap.getDouble("averageRating") : 0.0;
+                long oldCount = counselorSnap.getLong("reviewCount") != null ? counselorSnap.getLong("reviewCount") : 0;
+                
+                long newCount = oldCount + 1;
+                double newAvg = (oldAvg * oldCount + review.getRating()) / newCount;
+                
+                // Round to 1 decimal place for threshold check
+                newAvg = Math.round(newAvg * 10.0) / 10.0;
+
+                transaction.update(counselorRef, 
+                        "averageRating", newAvg,
+                        "reviewCount", newCount);
+
+                // Auto-suspend if below threshold (US-20)
+                if (newAvg < 2.5) {
+                    transaction.update(counselorRef, "suspended", true);
+                    activityController.logActivity("SUSPENSION", "Counselor " + review.getCounselorId() + " automatically suspended due to low rating: " + newAvg, "System");
+                }
+            }
+            return null;
+        }).addOnSuccessListener(v -> {
+            activityController.logActivity("REVIEW", "New anonymous review submitted for counselor " + review.getCounselorId(), "Student");
+            cb.onSuccess();
+        }).addOnFailureListener(cb::onFailure);
     }
+
 
     // -------------------------------------------------------------------------
     // US-07 / US-15: Fetch all reviews for a counselor

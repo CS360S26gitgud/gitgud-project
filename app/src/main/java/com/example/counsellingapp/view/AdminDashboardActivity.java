@@ -53,18 +53,25 @@ import java.util.List;
  *   <li>Per-row "Clear Suspension" button is visible only for suspended counselors;
  *       tapping it calls {@link AdminController#clearCounselorSuspension} after a
  *       confirmation dialog confirming the meeting has been held.
+ * <p><b>US-21 — Admin System Activity Monitoring:</b>
+ * <ul>
+ *   <li>"Logs" tab displays a real-time feed of system-wide events.
+ *   <li>Tracks bookings, cancellations, registrations, approvals, and reviews.
+ *   <li>Events are color-coded by type for easier scanning by administrators.
  * </ul>
  *
  * <p>CRC Responsibilities:
  * <ul>
  *   <li>Present admin management UI for students and counselors.
+ *   <li>Display a live activity log for system monitoring.
  *   <li>Delegate all Firestore mutations to {@link AdminController}.
  *   <li>Refresh lists after each mutation via {@code onResume()}.
  * </ul>
  *
- * CRC Collaborators: {@link AdminController}, {@link Student}, {@link Counselor}
+ * CRC Collaborators: {@link AdminController}, {@link ActivityController}, {@link Student}, {@link Counselor}
  */
 public class AdminDashboardActivity extends AppCompatActivity {
+
 
     private Button      btnLogout, btnCreateStudent, btnRegisterCounselor;
     private Button      btnShowStudents, btnShowCounselors, btnShowLogs;

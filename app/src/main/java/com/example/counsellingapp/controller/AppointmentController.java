@@ -174,30 +174,38 @@ public class AppointmentController {
                 db.collection(COL_AVAILABILITY).document(slot.getId());
         com.google.firebase.firestore.DocumentReference newApptRef =
                 db.collection(COL_APPOINTMENTS).document();
+        com.google.firebase.firestore.DocumentReference studentRef =
+                db.collection(COL_STUDENTS).document(studentId);
 
-        db.runTransaction((com.google.firebase.firestore.Transaction.Function<Void>) transaction -> {
-            com.google.firebase.firestore.DocumentSnapshot snapshot = transaction.get(slotRef);
-            Boolean isBooked = snapshot.getBoolean("booked");
+        db.runTransaction((com.google.firebase.firestore.Transaction.Function<String>) transaction -> {
+            com.google.firebase.firestore.DocumentSnapshot slotSnap = transaction.get(slotRef);
+            com.google.firebase.firestore.DocumentSnapshot studentSnap = transaction.get(studentRef);
+
+            Boolean isBooked = slotSnap.getBoolean("booked");
             if (isBooked != null && isBooked) {
                 throw new com.google.firebase.firestore.FirebaseFirestoreException(
                         "Slot was just taken!",
                         com.google.firebase.firestore.FirebaseFirestoreException.Code.ABORTED);
             }
+
+            String studentName = studentSnap.exists() ? studentSnap.getString("name") : "Student";
+
             transaction.update(slotRef, "booked", true);
             Appointment appt = new Appointment(
                     newApptRef.getId(), studentId, slot.getCounselorId(), slot.getId(), "upcoming");
             appt.setCounselorName(slot.getCounselorName());
             transaction.set(newApptRef, appt);
-            return null;
-        }).addOnSuccessListener(v -> {
+            return studentName;
+        }).addOnSuccessListener(studentName -> {
             String msg = "Session scheduled with " + slot.getCounselorName()
                     + " on " + slot.getDate() + " at " + slot.getStartTime();
             NotificationHelper.sendNotification(context, "Appointment Booked", msg);
-            activityController.logActivity("BOOKING", "Student booked appointment with counselor " + slot.getCounselorName(), "System");
+            activityController.logActivity("BOOKING", studentName + " booked appointment with counselor " + slot.getCounselorName(), "System");
             cb.onSuccess();
 
         }).addOnFailureListener(cb::onFailure);
     }
+
 
     // -------------------------------------------------------------------------
     // US-05: Cancel

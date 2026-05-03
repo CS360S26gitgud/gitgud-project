@@ -20,9 +20,14 @@ import java.util.Locale;
 
 /**
  * Main landing screen for logged-in students.
- * Will host navigation to booking, search, and history features.
+ * Surfaces key navigation to search, booking, and history.
+ *
+ * <p><b>US-09 — Calendar Integration:</b>
+ * On launch, the dashboard highlights the student's next upcoming appointment
+ * on the integrated {@code CalendarView} for passive tracking.
  */
 public class StudentDashboardActivity extends AppCompatActivity {
+
 
     private TextView tvWelcome;
     private Button btnLogout, btnViewSlots, btnSearchCounselors, btnAppointmentHistory;

@@ -7,9 +7,12 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
 /**
- * Helper class to manage local notifications for appointments.
+ * Helper class to manage local notifications for appointments (US-08).
+ * Provides a unified way to notify students and counselors about bookings,
+ * cancellations, and rescheduling events.
  */
 public class NotificationHelper {
+
     private static final String CHANNEL_ID = "appointment_channel";
     private static final String CHANNEL_NAME = "Appointment Notifications";
 
