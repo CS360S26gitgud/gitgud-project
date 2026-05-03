@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.counsellingapp.R;
 import com.example.counsellingapp.controller.AdminController;
 import com.example.counsellingapp.controller.ActivityController;
+import com.example.counsellingapp.model.Constants;
 import com.example.counsellingapp.model.Counselor;
 import com.example.counsellingapp.model.Student;
 import com.example.counsellingapp.model.SystemActivity;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -363,7 +368,12 @@ public class AdminDashboardActivity extends AppCompatActivity {
         EditText etName  = dialogView.findViewById(R.id.etDialogCounselorName);
         EditText etEmail = dialogView.findViewById(R.id.etDialogCounselorEmail);
         EditText etPass  = dialogView.findViewById(R.id.etDialogCounselorPassword);
-        EditText etSpec  = dialogView.findViewById(R.id.etDialogCounselorSpec);
+        Spinner spSpec   = dialogView.findViewById(R.id.spDialogCounselorSpec);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, Constants.SPECIALIZATIONS);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spSpec.setAdapter(adapter);
 
         new AlertDialog.Builder(this)
                 .setTitle("Register Counselor")
@@ -372,7 +382,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
                     String name  = etName.getText().toString().trim();
                     String email = etEmail.getText().toString().trim();
                     String pass  = etPass.getText().toString().trim();
-                    String spec  = etSpec.getText().toString().trim();
+                    String spec  = spSpec.getSelectedItem().toString();
+
                     if (name.isEmpty() || email.isEmpty() || pass.isEmpty()) {
                         Toast.makeText(this, "Name, email and password are required",
                                 Toast.LENGTH_SHORT).show();
@@ -410,12 +421,21 @@ public class AdminDashboardActivity extends AppCompatActivity {
         EditText etName  = dialogView.findViewById(R.id.etDialogCounselorName);
         EditText etEmail = dialogView.findViewById(R.id.etDialogCounselorEmail);
         EditText etPass  = dialogView.findViewById(R.id.etDialogCounselorPassword);
-        EditText etSpec  = dialogView.findViewById(R.id.etDialogCounselorSpec);
+        Spinner spSpec   = dialogView.findViewById(R.id.spDialogCounselorSpec);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, Constants.SPECIALIZATIONS);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spSpec.setAdapter(adapter);
 
         etName.setText(counselor.getName());
         etEmail.setText(counselor.getEmail());
         etPass.setVisibility(View.GONE);
-        if (counselor.getSpecialization() != null) etSpec.setText(counselor.getSpecialization());
+        
+        if (counselor.getSpecialization() != null) {
+            int pos = Constants.SPECIALIZATIONS.indexOf(counselor.getSpecialization());
+            if (pos >= 0) spSpec.setSelection(pos);
+        }
 
         new AlertDialog.Builder(this)
                 .setTitle("Edit Counselor")
@@ -423,7 +443,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 .setPositiveButton("Save", (dialog, which) -> {
                     String name  = etName.getText().toString().trim();
                     String email = etEmail.getText().toString().trim();
-                    String spec  = etSpec.getText().toString().trim();
+                    String spec  = spSpec.getSelectedItem().toString();
+
                     if (name.isEmpty() || email.isEmpty()) {
                         Toast.makeText(this, "Name and email are required",
                                 Toast.LENGTH_SHORT).show();
