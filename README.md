@@ -208,7 +208,7 @@
 | 05  | As a student, I want to cancel or reschedule an appointment so that I can manage the conflicts in my schedule                                                              | 5           | Medium |    Completed    |
 | 06  | As a student, I want to be able to review and rate my counseling session anonymously so that I can provide feedback about the counselor                                    | 3           | Medium |    Completed    |
 | 07  | As a student, I want to be able to view the reviews of a counselor so that I can ascertain the best of my options                                                          | 5           | Low    |    Completed    |
-| 08  | As a student, I want to receive appointment notifications so that I don’t miss my session                                                                                  | 5           | Medium |        |
+| 08  | As a student, I want to receive appointment notifications so that I don’t miss my session                                                                                  | 5           | Medium |    Completed    |
 | 09  | As a student, I want to be able to passively keep track of appointments using a calendar                                                                                   | 5           | Low    |    Completed    |
 | 10  | As a student, I want to be able to search/filter through the available list of counselors by their specializations or availability, so I can find the most suitable person | 2           | Low    |   Completed     |
 | 11  | As a student, I want to view my appointment history so that I can keep track of past sessions                                                                              | 2           | Low    |   Completed     |
