@@ -5,10 +5,18 @@ import com.example.counsellingapp.model.Appointment;
 import com.example.counsellingapp.model.Counselor;
 import com.example.counsellingapp.model.Student;
 import com.example.counsellingapp.model.TimeSlot;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.Query;
-
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import java.util.concurrent.TimeUnit;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -197,12 +205,15 @@ public class AppointmentController {
             transaction.set(newApptRef, appt);
             return studentName;
         }).addOnSuccessListener(studentName -> {
-            String msg = "Session scheduled with " + slot.getCounselorName()
-                    + " on " + slot.getDate() + " at " + slot.getStartTime();
+            // Trigger the immediate notification
+            String msg = "Session scheduled with " + slot.getCounselorName();
             NotificationHelper.sendNotification(context, "Appointment Booked", msg);
-            activityController.logActivity("BOOKING", studentName + " booked appointment with counselor " + slot.getCounselorName(), "System");
-            cb.onSuccess();
 
+            // NEW: Trigger the 30-minute reminder schedule
+            scheduleAppointmentReminder(context, slot);
+
+            activityController.logActivity("BOOKING", studentName + " booked counselor " + slot.getCounselorName(), "System");
+            cb.onSuccess();
         }).addOnFailureListener(cb::onFailure);
     }
 
@@ -294,35 +305,49 @@ public class AppointmentController {
 
     /** Counselor reschedules an appointment and notifies the student. */
     public void rescheduleAppointmentByCounselor(Context context, Appointment appt,
-                                                  TimeSlot newSlot, BookingCallback cb) {
+                                                 TimeSlot newSlot, BookingCallback cb) {
         com.google.firebase.firestore.DocumentReference oldApptRef =
-                db.collection(COL_APPOINTMENTS).document(appt.getId());
+                db.collection("appointments").document(appt.getId());
         com.google.firebase.firestore.DocumentReference newApptRef =
-                db.collection(COL_APPOINTMENTS).document();
+                db.collection("appointments").document();
         com.google.firebase.firestore.DocumentReference oldSlotRef =
-                db.collection(COL_AVAILABILITY).document(appt.getTimeslotId());
+                db.collection("availability").document(appt.getTimeslotId());
         com.google.firebase.firestore.DocumentReference newSlotRef =
-                db.collection(COL_AVAILABILITY).document(newSlot.getId());
+                db.collection("availability").document(newSlot.getId());
 
-        db.runTransaction((com.google.firebase.firestore.Transaction.Function<Void>) transaction -> {
+        db.runTransaction(transaction -> {
+            com.google.firebase.firestore.DocumentSnapshot oldApptSnap = transaction.get(oldApptRef);
             com.google.firebase.firestore.DocumentSnapshot slotSnap = transaction.get(newSlotRef);
+
             if (Boolean.TRUE.equals(slotSnap.getBoolean("booked"))) {
                 throw new com.google.firebase.firestore.FirebaseFirestoreException(
                         "Slot taken", com.google.firebase.firestore.FirebaseFirestoreException.Code.ABORTED);
             }
+
+            // Dynamically resolve the name from the existing record to avoid null or hardcoding
+            String counselorName = oldApptSnap.getString("counselorName");
+            if (counselorName == null) counselorName = "Your Counselor";
+
             transaction.update(oldApptRef, "status", "rescheduled");
             transaction.update(oldSlotRef, "booked", false);
+
             Appointment newAppt = new Appointment(
                     newApptRef.getId(), appt.getStudentId(),
                     newSlot.getCounselorId(), newSlot.getId(), "upcoming");
-            newAppt.setCounselorName(newSlot.getCounselorName());
+
+            newAppt.setCounselorName(counselorName);
             transaction.set(newApptRef, newAppt);
             transaction.update(newSlotRef, "booked", true);
-            return null;
-        }).addOnSuccessListener(v -> {
-            String msg = "Counselor " + appt.getCounselorName()
-                    + " rescheduled your session to " + newSlot.getDate();
+
+            return counselorName; // Pass the name to the success listener
+        }).addOnSuccessListener(resolvedName -> {
+            // 1. Immediate Notification
+            String msg = "Counselor " + resolvedName + " rescheduled your session to " + newSlot.getDate();
             NotificationHelper.sendNotification(context, "Appointment Rescheduled", msg);
+
+            // 2. Schedule Future Reminder
+            scheduleAppointmentReminder(context, newSlot);
+
             cb.onSuccess();
         }).addOnFailureListener(cb::onFailure);
     }
@@ -345,6 +370,42 @@ public class AppointmentController {
                 })
 
                 .addOnFailureListener(cb::onFailure);
+    }
+
+    private void scheduleAppointmentReminder(Context context, TimeSlot slot) {
+        try {
+            // Parse the slot date and time
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+            Date apptDate = sdf.parse(slot.getDate() + " " + slot.getStartTime());
+
+            if (apptDate == null) return;
+
+            // Calculate the delay (Appt Time - Current Time - 30 minutes)
+            long reminderTimeBuffer = 30 * 60 * 1000; // 30 minutes in ms
+            long delay = (apptDate.getTime() - System.currentTimeMillis()) - reminderTimeBuffer;
+
+            if (delay > 0) {
+                // Prepare data for the worker
+                String cName = slot.getCounselorName() != null ? slot.getCounselorName() : "your counselor";
+
+                Data inputData = new Data.Builder()
+                        .putString("title", "Upcoming Session")
+                        .putString("message", "Your session with " + cName + " starts in 30 minutes.")
+                        .build();
+
+                // Create a one-time work request
+                OneTimeWorkRequest reminderRequest = new OneTimeWorkRequest.Builder(ReminderWorker.class)
+                        .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                        .setInputData(inputData)
+                        .addTag(slot.getId()) // Use slot ID to identify the task if needed
+                        .build();
+
+                // Enqueue the work
+                WorkManager.getInstance(context).enqueue(reminderRequest);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // -------------------------------------------------------------------------

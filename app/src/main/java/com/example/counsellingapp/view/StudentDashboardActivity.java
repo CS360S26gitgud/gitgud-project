@@ -1,6 +1,9 @@
 package com.example.counsellingapp.view;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -9,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.counsellingapp.R;
 import com.example.counsellingapp.controller.AppointmentController;
@@ -36,6 +41,7 @@ public class StudentDashboardActivity extends BaseSessionActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_dashboard);
+        requestNotificationPermission();
 
         tvWelcome = findViewById(R.id.tvWelcome);
         tvNextApptDetails = findViewById(R.id.tvNextApptDetails);
@@ -132,5 +138,18 @@ public class StudentDashboardActivity extends BaseSessionActivity {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
+    }
+
+    private void requestNotificationPermission() {
+        // Only necessary for API 33+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // Ask the user
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+            }
+        }
     }
 }

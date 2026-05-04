@@ -200,9 +200,13 @@ public class CounselorDashboardActivity extends BaseSessionActivity implements A
      * @param slots The list of available time slots.
      */
     private void showRescheduleDialog(Appointment appt, List<TimeSlot> slots) {
+        // Get the counselor's name from the welcome header or the appt object
+        String myName = appt.getCounselorName();
+
         String[] slotStrings = new String[slots.size()];
         for (int i = 0; i < slots.size(); i++) {
             TimeSlot s = slots.get(i);
+            s.setCounselorName(myName); // Hydrate the slot locally before rescheduling
             slotStrings[i] = s.getDate() + " " + s.getStartTime();
         }
 
