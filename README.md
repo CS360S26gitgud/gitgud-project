@@ -139,6 +139,11 @@
 ![UML Diagram Part 3](docs/images/UML_Diagram_Part_3.jpeg)
 
 ---
+### UML – Project Part 4
+
+![UML Diagram Part 3](docs/images/UML_Diagram_Part_4.png)
+
+---
 
 ## Product Backlog
 ### Product Backlog – Project Part 2
