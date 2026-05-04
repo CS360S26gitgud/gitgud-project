@@ -30,7 +30,7 @@ import java.util.List;
  * Provides access to upcoming appointments, availability settings, and reviews.
  * Supports counselor-initiated appointment management (cancellation and rescheduling).
  */
-public class CounselorDashboardActivity extends AppCompatActivity implements AppointmentAdapter.OnAppointmentActionListener {
+public class CounselorDashboardActivity extends BaseSessionActivity implements AppointmentAdapter.OnAppointmentActionListener {
 
     private TextView tvWelcome, tvEmpty;
     private Button btnLogout, btnSetAvailability;

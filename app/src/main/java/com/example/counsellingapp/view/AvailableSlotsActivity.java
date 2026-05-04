@@ -52,7 +52,7 @@ public class AvailableSlotsActivity extends BaseSessionActivity {
         List<String> specs = new ArrayList<>();
         specs.add("All Specializations");
         specs.addAll(com.example.counsellingapp.model.Constants.SPECIALIZATIONS);
-
+        
         android.widget.ArrayAdapter<String> specAdapter = new android.widget.ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_dropdown_item, specs);
         spSpecialization.setAdapter(specAdapter);
@@ -60,7 +60,7 @@ public class AvailableSlotsActivity extends BaseSessionActivity {
         List<String> days = new ArrayList<>();
         days.add("All Days");
         days.addAll(com.example.counsellingapp.model.Constants.DAYS);
-
+        
         android.widget.ArrayAdapter<String> dayAdapter = new android.widget.ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_dropdown_item, days);
         spDay.setAdapter(dayAdapter);
@@ -80,13 +80,13 @@ public class AvailableSlotsActivity extends BaseSessionActivity {
 
         List<TimeSlot> filtered = new ArrayList<>();
         for (TimeSlot slot : allSlots) {
-            boolean matchesSpec = selectedSpec.equals("All Specializations") ||
-                    (slot.getSpecialization() != null && slot.getSpecialization().equals(selectedSpec));
-
+            boolean matchesSpec = selectedSpec.equals("All Specializations") || 
+                                 (slot.getSpecialization() != null && slot.getSpecialization().equals(selectedSpec));
+            
             // Derive day from date string YYYY-MM-DD
             String slotDay = getDayFromDate(slot.getDate());
-            boolean matchesDay = selectedDay.equals("All Days") ||
-                    (slotDay != null && slotDay.equalsIgnoreCase(selectedDay));
+            boolean matchesDay = selectedDay.equals("All Days") || 
+                                (slotDay != null && slotDay.equalsIgnoreCase(selectedDay));
 
             if (matchesSpec && matchesDay) {
                 filtered.add(slot);

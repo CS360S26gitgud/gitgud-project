@@ -81,31 +81,6 @@
                             android:inputType="textEmailAddress" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!--
-                        Counselor-only: Specialization dropdown.
-                        Uses the Material ExposedDropdownMenu style so the field renders
-                        as a non-editable spinner populated from Constants.SPECIALIZATIONS.
-                        Visibility is toggled in RegisterActivity based on rgRole selection.
-                        Starts GONE so it never appears for student registrations.
-                    -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilSpecialization"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:hint="Specialization"
-                        android:visibility="gone">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/actvSpecialization"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:inputType="none"
-                            android:cursorVisible="false" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
                     <!-- Password Field -->
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -122,41 +97,6 @@
                             android:layout_height="wrap_content"
                             android:inputType="textPassword" />
                     </com.google.android.material.textfield.TextInputLayout>
-
-                    <!-- Role Selection -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="I am registering as a:"
-                        android:textColor="#212529"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <RadioGroup
-                        android:id="@+id/rgRole"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/rbStudent"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:checked="true"
-                            android:buttonTint="#6200EE"
-                            android:text="Student" />
-
-                        <RadioButton
-                            android:id="@+id/rbCounselor"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="#6200EE"
-                            android:text="Counselor" />
-                    </RadioGroup>
 
                     <!-- Register Button -->
                     <com.google.android.material.button.MaterialButton

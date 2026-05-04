@@ -46,9 +46,9 @@ public abstract class BaseSessionActivity extends AppCompatActivity {
 
     /**
      * Inactivity period in milliseconds before the session is automatically terminated.
-     * Default is 5 minutes. Adjust here to change the timeout app-wide.
+     * Default is 10 minutes. Adjust here to change the timeout app-wide.
      */
-    private static final long TIMEOUT_MS = 5 * 60 * 1000L;
+    private static final long TIMEOUT_MS = 10 * 60 * 1000L;
 
     private final Handler  sessionHandler = new Handler(Looper.getMainLooper());
     private final Runnable sessionTimeout = this::onSessionTimeout;

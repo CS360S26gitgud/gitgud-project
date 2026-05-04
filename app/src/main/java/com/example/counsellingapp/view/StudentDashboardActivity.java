@@ -45,7 +45,7 @@ public class StudentDashboardActivity extends BaseSessionActivity {
         btnViewSlots = findViewById(R.id.btnViewSlots);
         btnSearchCounselors = findViewById(R.id.btnSearchCounselors);
         btnAppointmentHistory = findViewById(R.id.btnAppointmentHistory);
-
+        
         appointmentController = new AppointmentController();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -55,24 +55,24 @@ public class StudentDashboardActivity extends BaseSessionActivity {
 
             // Fetch the full name from the 'students' Firestore collection
             FirebaseFirestore.getInstance().collection("students")
-                    .document(user.getUid())
-                    .get()
-                    .addOnSuccessListener(doc -> {
-                        if (doc.exists() && doc.contains("name")) {
-                            String fullName = doc.getString("name");
-                            if (fullName != null && !fullName.isEmpty()) {
-                                tvWelcome.setText("Welcome, " + fullName);
-                            } else {
-                                tvWelcome.setText("Welcome, " + user.getEmail());
-                            }
+                .document(user.getUid())
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists() && doc.contains("name")) {
+                        String fullName = doc.getString("name");
+                        if (fullName != null && !fullName.isEmpty()) {
+                            tvWelcome.setText("Welcome, " + fullName);
                         } else {
-                            // Fallback to email only if name is missing from DB
                             tvWelcome.setText("Welcome, " + user.getEmail());
                         }
-                    })
-                    .addOnFailureListener(e -> {
+                    } else {
+                        // Fallback to email only if name is missing from DB
                         tvWelcome.setText("Welcome, " + user.getEmail());
-                    });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    tvWelcome.setText("Welcome, " + user.getEmail());
+                });
         }
 
 
@@ -88,7 +88,7 @@ public class StudentDashboardActivity extends BaseSessionActivity {
                                 String date = appointments.get(0).getTimeSlot().getDate();
                                 String time = appointments.get(0).getTimeSlot().getStartTime();
                                 String counselor = appointments.get(0).getCounselorName();
-
+                                
                                 String details = date + " at " + time;
                                 if (counselor != null && !counselor.isEmpty()) {
                                     details += "\nwith " + counselor;
@@ -98,7 +98,7 @@ public class StudentDashboardActivity extends BaseSessionActivity {
                                 // US-09: Highlight/Focus the calendar on this date
                                 try {
                                     long dateMillis = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
-                                            .parse(date).getTime();
+                                        .parse(date).getTime();
                                     calendarView.setDate(dateMillis, true, true);
                                 } catch (Exception e) {
                                 }

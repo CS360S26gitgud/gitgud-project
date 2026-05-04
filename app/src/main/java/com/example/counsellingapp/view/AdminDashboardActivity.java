@@ -75,7 +75,7 @@ import java.util.List;
  *
  * CRC Collaborators: {@link AdminController}, {@link ActivityController}, {@link Student}, {@link Counselor}
  */
-public class AdminDashboardActivity extends AppCompatActivity {
+public class AdminDashboardActivity extends BaseSessionActivity {
 
 
     private Button      btnLogout, btnCreateStudent, btnRegisterCounselor;
