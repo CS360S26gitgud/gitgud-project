@@ -57,6 +57,14 @@
         android:minHeight="48dp"
         android:layout_marginBottom="12dp" />
 
+            <CheckBox
+                android:id="@+id/cbSortByRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sort by Highest Rating"
+                android:textSize="14sp"
+                android:textColor="#495057"
+                android:layout_marginBottom="8dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSearch"

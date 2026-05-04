@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * <ul>
  *   <li>Newly registered counselors (awaiting admin approval) are invisible to students.
  *   <li>Rating-suspended counselors are invisible to students until an admin clears
- *       the suspension via {@link AdminController#clearSuspension}.
+ *       the suspension via {@link AdminController#clearCounselorSuspension(String, AdminController.AdminCallback)}.
  * </ul>
  *
  * <p>Filtering is applied in memory to avoid Firestore composite index requirements,
@@ -144,5 +144,22 @@ public class CounselorController {
                     callback.onSuccess(counselors);
                 })
                 .addOnFailureListener(callback::onFailure);
+    }
+    public void searchAndSortCounselors(String specialization, String day, boolean sortByRating, CounselorListCallback callback) {
+        searchCounselors(specialization, day, new CounselorListCallback() {
+            @Override
+            public void onSuccess(List<Counselor> counselors) {
+                if (sortByRating) {
+                    // Sort descending: highest rating first
+                    counselors.sort((c1, c2) -> Float.compare(c2.getAverageRating(), c1.getAverageRating()));
+                }
+                callback.onSuccess(counselors);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                callback.onFailure(e);
+            }
+        });
     }
 }

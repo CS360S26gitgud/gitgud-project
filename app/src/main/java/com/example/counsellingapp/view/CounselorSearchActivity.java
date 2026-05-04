@@ -3,6 +3,7 @@ package com.example.counsellingapp.view;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -36,7 +37,7 @@ public class CounselorSearchActivity extends BaseSessionActivity {
     private Button       btnSearch;
     private RecyclerView rvCounselors;
 
-
+    private CheckBox cbSortByRating;
     private CounselorController counselorController;
 
     @Override
@@ -53,6 +54,8 @@ public class CounselorSearchActivity extends BaseSessionActivity {
         rvCounselors.setLayoutManager(new LinearLayoutManager(this));
 
         setupSpinners();
+
+        cbSortByRating = findViewById(R.id.cbSortByRating); // Bind the new view
 
         btnSearch.setOnClickListener(v -> performSearch());
         performSearch(); // Populate on open
@@ -81,21 +84,20 @@ public class CounselorSearchActivity extends BaseSessionActivity {
     private void performSearch() {
         String spec = spSpecialization.getSelectedItem().toString();
         String day  = spDay.getSelectedItem().toString();
+        boolean shouldSort = cbSortByRating.isChecked();
 
         if (spec.equals("All Specializations")) spec = "";
         if (day.equals("Any Day")) day = "";
 
-
-        counselorController.searchCounselors(spec, day, new CounselorController.CounselorListCallback() {
+        counselorController.searchAndSortCounselors(spec, day, shouldSort, new CounselorController.CounselorListCallback() {
             @Override
-            public void onSuccess(List<Counselor> counselors) {   // was List<User> — now correct
-                rvCounselors.setAdapter(new CounselorAdapter(counselors));
+            public void onSuccess(List<Counselor> counselors) {
+                rvCounselors.setAdapter(new CounselorAdapter(counselors)); // Display sorted results
             }
 
             @Override
             public void onFailure(Exception e) {
-                Toast.makeText(CounselorSearchActivity.this,
-                        "Search failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CounselorSearchActivity.this, "Search failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
