@@ -243,6 +243,6 @@
 
 ### Wireframes – Project Part 4
 
-
+![Component Diagram](docs/images/Component2.png)
 
 ---
