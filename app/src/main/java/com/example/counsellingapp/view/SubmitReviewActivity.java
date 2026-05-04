@@ -9,7 +9,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.example.counsellingapp.R;
 import com.example.counsellingapp.controller.ReviewController;
@@ -18,17 +18,15 @@ import com.google.firebase.Timestamp;
 
 /**
  * US-06: Allows a student to anonymously rate and comment on a completed appointment.
- *
  * Entry point : HistoryAdapter — "Leave a Review" button on a completed appointment card.
  * On success  : finishes and returns to AppointmentHistoryActivity, which refreshes
  *               onResume() and flips the button to "✓ Review submitted".
- *
  * Intent extras (all required):
  *   EXTRA_APPOINTMENT_ID  — becomes the Firestore document ID for this review
  *   EXTRA_COUNSELOR_ID    — stored in the review for counselor-query support
  *   EXTRA_COUNSELOR_NAME  — display only, shown in the screen title
  */
-public class SubmitReviewActivity extends AppCompatActivity {
+public class SubmitReviewActivity extends BaseSessionActivity {
 
     public static final String EXTRA_APPOINTMENT_ID = "appointmentId";
     public static final String EXTRA_COUNSELOR_ID   = "counselorId";

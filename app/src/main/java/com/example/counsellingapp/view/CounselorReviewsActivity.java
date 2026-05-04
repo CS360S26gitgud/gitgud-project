@@ -6,7 +6,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,15 +20,13 @@ import java.util.Locale;
 /**
  * US-07: Student views a counselor's reviews — launched from CounselorAdapter.
  * US-15: Counselor views their own reviews — launched from CounselorDashboardActivity.
- *
  * A single Activity serves both user stories. The only difference is who launches it
  * and with whose counselorId. The screen is completely read-only.
- *
  * Required Intent extras:
  *   EXTRA_COUNSELOR_ID   — UID used to query the "reviews" collection
  *   EXTRA_COUNSELOR_NAME — display name shown in the screen title
  */
-public class CounselorReviewsActivity extends AppCompatActivity {
+public class CounselorReviewsActivity extends BaseSessionActivity {
 
     public static final String EXTRA_COUNSELOR_ID   = "counselorId";
     public static final String EXTRA_COUNSELOR_NAME = "counselorName";

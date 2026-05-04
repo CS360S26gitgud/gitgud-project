@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,15 +28,15 @@ import java.util.stream.Collectors;
  * Activity for students to view their appointment history.
  * Supports viewing upcoming, completed, and cancelled appointments.
  * Integrated with US-06 (Reviews), US-05 (Cancel/Reschedule), and US-08 (Notifications).
- * 
+ *
  * CRC Responsibilities:
  * - Display list of student appointments
  * - Provide hooks for cancelling and rescheduling upcoming appointments
  * - Provide hooks for reviewing completed appointments
- * 
+ *
  * Collaborators: AppointmentController, HistoryAdapter, AvailabilityController, ReviewController
  */
-public class AppointmentHistoryActivity extends AppCompatActivity implements HistoryAdapter.OnAppointmentInteractionListener {
+public class AppointmentHistoryActivity extends BaseSessionActivity implements HistoryAdapter.OnAppointmentInteractionListener {
 
     private RecyclerView rvHistory;
     private ProgressBar  progressBar;
@@ -131,7 +131,7 @@ public class AppointmentHistoryActivity extends AppCompatActivity implements His
 
     /**
      * Renders the list of appointments using the HistoryAdapter.
-     * 
+     *
      * @param appointments List of resolved Appointment objects.
      * @param reviewedIds  Set of appointment IDs that have already been reviewed.
      */
@@ -143,7 +143,7 @@ public class AppointmentHistoryActivity extends AppCompatActivity implements His
     /**
      * Implementation of HistoryAdapter.OnAppointmentInteractionListener.
      * Displays a confirmation dialog before cancelling an appointment.
-     * 
+     *
      * @param appt The appointment to be cancelled.
      */
     @Override
@@ -172,7 +172,7 @@ public class AppointmentHistoryActivity extends AppCompatActivity implements His
     /**
      * Implementation of HistoryAdapter.OnAppointmentInteractionListener.
      * Fetches all available slots to allow the user to choose a new time for rescheduling.
-     * 
+     *
      * @param appt The appointment to be rescheduled.
      */
     @Override
@@ -199,7 +199,7 @@ public class AppointmentHistoryActivity extends AppCompatActivity implements His
 
     /**
      * Displays a dialog with a list of available slots for the user to select from.
-     * 
+     *
      * @param appt  The existing appointment being rescheduled.
      * @param slots List of currently available time slots.
      */
@@ -222,7 +222,7 @@ public class AppointmentHistoryActivity extends AppCompatActivity implements His
 
     /**
      * Calls the controller to update the appointment to a new time slot.
-     * 
+     *
      * @param appt    The existing appointment record.
      * @param newSlot The new time slot selected by the student.
      */

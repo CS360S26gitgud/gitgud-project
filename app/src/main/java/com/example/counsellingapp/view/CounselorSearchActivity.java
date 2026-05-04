@@ -7,7 +7,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,16 +21,14 @@ import java.util.List;
 
 
 /**
- * US-10 (existing): Search and filter counselors by specialization / available day.
- * US-07 (new hook): Each counselor card now has a "View Reviews" button via CounselorAdapter.
- *
+ * US-10: Search and filter counselors by specialization / available day.
+ * US-07: Each counselor card now has a "View Reviews" button via CounselorAdapter.
  * Upgraded from ListView + ArrayAdapter<String> to RecyclerView + CounselorAdapter.
  * Controller logic is unchanged — only the presentation layer is updated.
- *
  * Fix: callback type corrected from List<User> to List<Counselor> to match
  * CounselorController.CounselorListCallback signature.
  */
-public class CounselorSearchActivity extends AppCompatActivity {
+public class CounselorSearchActivity extends BaseSessionActivity {
 
     private Spinner      spSpecialization, spDay;
     private Button       btnSearch;

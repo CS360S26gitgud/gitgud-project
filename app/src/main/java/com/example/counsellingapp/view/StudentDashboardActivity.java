@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.example.counsellingapp.R;
 import com.example.counsellingapp.controller.AppointmentController;
@@ -24,7 +24,7 @@ import java.util.List;
  * Main landing screen for logged-in students.
  * Surfaces key navigation to search, booking, and history.
  */
-public class StudentDashboardActivity extends AppCompatActivity {
+public class StudentDashboardActivity extends BaseSessionActivity {
 
     private TextView tvWelcome, tvNextApptDetails;
     private CalendarView calendarView;
@@ -45,7 +45,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
         btnViewSlots = findViewById(R.id.btnViewSlots);
         btnSearchCounselors = findViewById(R.id.btnSearchCounselors);
         btnAppointmentHistory = findViewById(R.id.btnAppointmentHistory);
-        
+
         appointmentController = new AppointmentController();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -55,24 +55,24 @@ public class StudentDashboardActivity extends AppCompatActivity {
 
             // Fetch the full name from the 'students' Firestore collection
             FirebaseFirestore.getInstance().collection("students")
-                .document(user.getUid())
-                .get()
-                .addOnSuccessListener(doc -> {
-                    if (doc.exists() && doc.contains("name")) {
-                        String fullName = doc.getString("name");
-                        if (fullName != null && !fullName.isEmpty()) {
-                            tvWelcome.setText("Welcome, " + fullName);
+                    .document(user.getUid())
+                    .get()
+                    .addOnSuccessListener(doc -> {
+                        if (doc.exists() && doc.contains("name")) {
+                            String fullName = doc.getString("name");
+                            if (fullName != null && !fullName.isEmpty()) {
+                                tvWelcome.setText("Welcome, " + fullName);
+                            } else {
+                                tvWelcome.setText("Welcome, " + user.getEmail());
+                            }
                         } else {
+                            // Fallback to email only if name is missing from DB
                             tvWelcome.setText("Welcome, " + user.getEmail());
                         }
-                    } else {
-                        // Fallback to email only if name is missing from DB
+                    })
+                    .addOnFailureListener(e -> {
                         tvWelcome.setText("Welcome, " + user.getEmail());
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    tvWelcome.setText("Welcome, " + user.getEmail());
-                });
+                    });
         }
 
 
@@ -88,7 +88,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                                 String date = appointments.get(0).getTimeSlot().getDate();
                                 String time = appointments.get(0).getTimeSlot().getStartTime();
                                 String counselor = appointments.get(0).getCounselorName();
-                                
+
                                 String details = date + " at " + time;
                                 if (counselor != null && !counselor.isEmpty()) {
                                     details += "\nwith " + counselor;
@@ -98,7 +98,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                                 // US-09: Highlight/Focus the calendar on this date
                                 try {
                                     long dateMillis = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
-                                        .parse(date).getTime();
+                                            .parse(date).getTime();
                                     calendarView.setDate(dateMillis, true, true);
                                 } catch (Exception e) {
                                 }
