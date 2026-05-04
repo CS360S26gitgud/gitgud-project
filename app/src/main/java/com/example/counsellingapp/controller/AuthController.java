@@ -8,13 +8,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 /**
  * Handles Firebase Authentication and Firestore writes for login and registration.
  *
- * <p><b>Registration change (US-19):</b> The public registration path now only creates
- * {@link Student} accounts. Counselor accounts are created exclusively by an admin
- * through {@link AdminController#registerCounselor}. The {@link #registerUser} method
- * always writes to the {@code students/} collection regardless of any role parameter
- * that might be passed — counselor registration via this path is no longer supported.
+ * <p><b>Registration:</b> Two distinct factory methods create the correct domain object:
+ * <ul>
+ *   <li>{@link #registerStudent}  — creates a {@link Student} in the {@code students/} collection.
+ *   <li>{@link #registerCounselor} — creates a {@link Counselor} (unapproved) in the
+ *       {@code counselors/} collection. Self-registered counselors must be approved by
+ *       an admin via {@link AdminController#setCounselorApproved} before they appear to students.
+ * </ul>
  *
- * <p><b>Login change (US-18):</b> After Firebase Auth succeeds, {@link #loginUser}
+ * <p><b>Login (US-18):</b> After Firebase Auth succeeds, {@link #loginUser}
  * fetches the user's document from the appropriate collection and checks type-specific
  * flags before allowing the session to proceed:
  * <ul>
@@ -30,12 +32,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
  *
  * <p>CRC Responsibilities:
  * <ul>
- *   <li>Create student Firebase Auth accounts and write {@link Student} documents.
+ *   <li>Create Student or Counselor Firebase Auth accounts and write the correct
+ *       typed Firestore document via the appropriate factory method.
  *   <li>Authenticate users and enforce the student active flag on login.
  *   <li>Delegate role resolution and routing to {@code LandingActivity}.
  * </ul>
  *
- * CRC Collaborators: {@link Student}, {@link AuthCallback}, {@code LandingActivity}
+ * CRC Collaborators: {@link Student}, {@link Counselor}, {@link AuthCallback},
+ *                    {@code LandingActivity}
  */
 public class AuthController {
 
@@ -45,19 +49,20 @@ public class AuthController {
     private final FirebaseAuth      mAuth = FirebaseAuth.getInstance();
     private final FirebaseFirestore db    = FirebaseFirestore.getInstance();
 
+    // -------------------------------------------------------------------------
+    // Registration — one method per concrete type
+    // -------------------------------------------------------------------------
+
     /**
      * Creates a new Firebase Auth account and writes an active {@link Student} document
      * to the {@code students/} Firestore collection.
-     *
-     * <p>Counselor registration is not available through this method. Admins must use
-     * {@link AdminController#registerCounselor} to create counselor accounts.
      *
      * @param name     The student's full display name.
      * @param email    Email address for the new account.
      * @param password Plain-text password (Firebase Auth handles hashing).
      * @param cb       Callback fired on write completion or failure.
      */
-    public void registerUser(String name, String email, String password, AuthCallback cb) {
+    public void registerStudent(String name, String email, String password, AuthCallback cb) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(result -> {
                     String  uid     = result.getUser().getUid();
@@ -69,6 +74,55 @@ public class AuthController {
                 })
                 .addOnFailureListener(cb::onFailure);
     }
+
+    /**
+     * Creates a new Firebase Auth account and writes an unapproved {@link Counselor}
+     * document to the {@code counselors/} Firestore collection.
+     *
+     * <p>The counselor starts with {@code approved = false} and must be explicitly
+     * approved by an admin via {@link AdminController#setCounselorApproved} before
+     * appearing in any student-facing search.
+     *
+     * <p>If {@code specialization} is {@code null} or blank the field is stored as
+     * {@code null} in Firestore; the UI convention is to display "General" in that case.
+     *
+     * @param name           The counselor's full display name.
+     * @param email          Email address for the new account.
+     * @param password       Plain-text password.
+     * @param specialization Area of expertise, or {@code null} / empty for general practice.
+     * @param cb             Callback fired on write completion or failure.
+     */
+    public void registerCounselor(String name, String email, String password,
+                                  String specialization, AuthCallback cb) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(result -> {
+                    String uid  = result.getUser().getUid();
+                    // Normalise: blank string → null so Firestore stores null cleanly.
+                    String spec = (specialization == null || specialization.trim().isEmpty())
+                            ? null : specialization.trim();
+                    Counselor counselor = new Counselor(uid, name, email, spec, null);
+                    db.collection(COLLECTION_COUNSELORS).document(uid)
+                            .set(counselor)
+                            .addOnSuccessListener(v -> cb.onSuccess())
+                            .addOnFailureListener(cb::onFailure);
+                })
+                .addOnFailureListener(cb::onFailure);
+    }
+
+    /**
+     * Kept for backward compatibility with any call-sites that still reference the old
+     * single-method signature. Delegates directly to {@link #registerStudent}.
+     *
+     * @deprecated Use {@link #registerStudent} or {@link #registerCounselor} explicitly.
+     */
+    @Deprecated
+    public void registerUser(String name, String email, String password, AuthCallback cb) {
+        registerStudent(name, email, password, cb);
+    }
+
+    // -------------------------------------------------------------------------
+    // Login
+    // -------------------------------------------------------------------------
 
     /**
      * Authenticates an existing user via Firebase Auth, then checks type-specific
@@ -83,10 +137,6 @@ public class AuthController {
      * <p>For counselors and admins the method calls {@link AuthCallback#onSuccess}
      * immediately after Auth succeeds. Dashboard routing (which enforces counselor
      * approval and suspension visibility) is handled by {@code LandingActivity.routeByRole}.
-     *
-     * <p>If the UID is not found in the {@code students/} collection the method assumes
-     * the user is a counselor or admin and proceeds to {@code onSuccess}, letting
-     * the routing layer resolve the type.
      *
      * @param email    The user's registered email address.
      * @param password The user's password.
@@ -114,13 +164,13 @@ public class AuthController {
                 .get()
                 .addOnSuccessListener(doc -> {
                     if (!doc.exists()) {
-                        // Not a student — counselor or admin, proceed normally
+                        // Not a student — counselor or admin, proceed normally.
                         cb.onSuccess();
                         return;
                     }
                     Student student = doc.toObject(Student.class);
                     if (student != null && !student.isActive()) {
-                        // Account deactivated by admin — sign out and reject
+                        // Account deactivated by admin — sign out and reject.
                         mAuth.signOut();
                         cb.onFailure(new IllegalStateException(
                                 "Your account has been deactivated. "
